@@ -1,0 +1,26 @@
+const assert=require('node:assert/strict');
+const vm=require('node:vm');
+const fs=require('node:fs');
+const {webcrypto}=require('node:crypto');
+const source=fs.readFileSync(require('node:path').join(__dirname,'../app.js'),'utf8');
+const prefix=source.slice(0,source.indexOf("$('#vaultDialog').addEventListener"));
+const parser=source.slice(source.indexOf('function parseTaskText'),source.indexOf("$('#readTasksBtn').onclick"));
+const storage=new Map();
+const context=vm.createContext({crypto:webcrypto,TextEncoder,TextDecoder,btoa,atob,URL,structuredClone,console,document:{querySelector:()=>({textContent:''})},localStorage:{setItem:(k,v)=>storage.set(k,v)},setTimeout,clearTimeout});
+vm.runInContext(prefix+'\n'+parser+`\nglobalThis.testApi={derive,encryptState,validateState,validateEnvelope,parseTaskText,safeUrl,b64,unb64};`,context);
+(async()=>{
+ const a=context.testApi, salt=webcrypto.getRandomValues(new Uint8Array(16)), pass='testing-only-passphrase';
+ const key=await a.derive(pass,salt);
+ const state={schemaVersion:1,sites:[{id:'s1',name:'课程',url:'https://example.com/',assignmentUrl:'',account:'private-user',password:'private-password'}],tasks:[{id:'t1',title:'习题',url:'',status:'open',due:'2026-10-08T15:59:00.000Z'}]};
+ const e=await a.encryptState(state,key,a.b64(salt));
+ assert(!JSON.stringify(e).includes('private-password')); assert(!JSON.stringify(e).includes('private-user'));
+ const plain=await webcrypto.subtle.decrypt({name:'AES-GCM',iv:a.unb64(e.iv)},key,a.unb64(e.ciphertext));
+ assert.deepEqual(JSON.parse(new TextDecoder().decode(plain)),state);
+ const wrong=await a.derive('wrong-passphrase',salt);await assert.rejects(webcrypto.subtle.decrypt({name:'AES-GCM',iv:a.unb64(e.iv)},wrong,a.unb64(e.ciphertext)));
+ const next=await a.encryptState(state,key,a.b64(salt));assert.notEqual(e.iv,next.iv);
+ a.validateEnvelope(e);a.validateState(state);assert.throws(()=>a.safeUrl('javascript:alert(1)'));assert.throws(()=>a.safeUrl('file:///tmp/foo'));
+ assert.throws(()=>a.validateState({...state,tasks:[{...state.tasks[0],due:'not-a-date'}]}));
+ const tasks=a.parseTaskText('习题 截止2026-10-08 23:59\n实验 截止2026年10月10日\n无日期任务\n错误日期2026-02-30');
+ assert.equal(tasks.length,4);assert.equal(tasks[0].due,'2026-10-08T23:59');assert.equal(tasks[1].due,'2026-10-10T23:59');assert.equal(tasks[2].due,'');assert.equal(tasks[3].due,'');
+ console.log('PASS: encrypted backup, wrong-password rejection, fresh IV, URL validation, state validation, text date parsing');
+})().catch(e=>{console.error(e);process.exitCode=1});
