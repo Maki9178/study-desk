@@ -1,0 +1,16 @@
+'use strict';
+const assert=require('node:assert/strict');
+const {capture,bookmark}=require('../pta.js');
+const radar=require('../radar.js');
+const location={hostname:'pintia.cn',href:'https://pintia.cn/problem-sets/active',pathname:'/problem-sets/active'};
+const card=(id,title,text)=>({innerText:text,getAttribute:()=>'/problem-sets/'+id+'/overview',querySelector:()=>({getAttribute:()=>title})});
+const cards=[card('123','练习一','练习一 关闭时间: 24 分钟 后'),card('456','练习二','练习二 关闭时间: 2026-10-12 19:16'),card('789','教材','教材 开始答题')];
+const parsed=capture({querySelectorAll:()=>cards},location);
+assert.equal(parsed.tasks.length,2);assert.equal(parsed.tasks[0].due,'');assert.match(parsed.tasks[0].note,/核对/);assert.equal(parsed.tasks[1].due,'2026-10-12T11:16:00.000Z');
+let id=0;const first=radar.mergeLegacy({schemaVersion:1,sites:[],tasks:[]},parsed,()=>String(++id));assert.equal(first.tasksAdded,2);assert.equal(radar.mergeLegacy(first.state,parsed,()=>String(++id)).tasksAdded,0);
+const overview=capture({title:'概览 - 练习一',body:{innerText:'答题中 答题结束时间 2026/10/07 22:59:00 100 % 答题进度'},querySelectorAll:()=>[]},{...location,pathname:'/problem-sets/123/exam/overview'});
+assert.equal(overview.tasks[0].due,'2026-10-07T14:59:00.000Z');assert.equal(overview.tasks[0].status,'doing');assert.match(overview.tasks[0].note,/100%/);
+assert.throws(()=>capture({querySelectorAll:()=>[]},location),/未找到/);assert.throws(()=>capture({}, {...location,hostname:'evil.example'}),/PTA/);
+assert.throws(()=>capture({querySelectorAll:()=>[card('123','错误','关闭时间: 2026-02-30 19:16')]},location),/无效/);
+assert.match(bookmark(),/^javascript:/);assert(!bookmark().includes('fetch'));
+console.log('PASS: PTA visible cards, Shanghai deadlines, relative-date warning, progress not completion, no results, wrong host, invalid date and repeated import');

@@ -1,62 +1,454 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>课桌 · 网站与作业管理器</title><meta name="description" content="本地保存网站、加密登录信息和作业清单。"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232d57da'/%3E%3Cpath d='M8 9h16v15H8zM8 14h16' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E"><style>:root{--blue:#2d57da;--ink:#172238;--muted:#647187;--line:#e1e6ef;--bg:#f3f6fb;--red:#bf3c40;--green:#197350}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;background:white;border:1px solid var(--line);border-radius:9px;padding:9px 14px;color:var(--ink)}button:hover{border-color:var(--blue);color:var(--blue)}button:disabled{opacity:.55;cursor:wait}button.primary{background:var(--blue);color:white;border-color:var(--blue)}input,select,textarea{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:white;min-width:0;width:100%;color:var(--ink)}input:focus,select:focus,textarea:focus{outline:2px solid #a4b9ff;outline-offset:2px}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}aside{background:#152444;color:#fff;padding:30px 22px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:700}.brand small{display:block;font-size:11px;letter-spacing:2px;color:#a7b6d2}.logo{background:#4168e4;padding:7px 13px;border-radius:12px}nav{display:grid;gap:8px;margin-top:45px}nav button{background:transparent;border:0;color:#b7c5df;text-align:left;padding:13px 16px}nav button.active{background:#2c4166;color:white}.sidebar-bottom{margin-top:auto;color:#afbed8}.sidebar-bottom p{margin-bottom:4px}.sidebar-bottom small{font-size:13px}.sidebar-bottom button{margin-top:18px;width:100%;background:transparent;border-color:#425376;color:#e5ecfa}main{max-width:1440px;width:100%;padding:35px 42px}header{display:flex;justify-content:space-between;align-items:center;gap:20px}h1{font-size:29px;letter-spacing:-1px;line-height:1.3;margin:5px 0 0}h2{font-size:20px;margin:0}.eyebrow{color:var(--muted);font-size:14px}.header-actions{display:flex;gap:8px;flex-wrap:wrap}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:28px 0}.stat{background:white;border:1px solid var(--line);border-radius:13px;padding:18px 22px}.stat strong{display:block;font-size:30px;line-height:1.4}.stat span{color:var(--muted);font-size:14px}.stat.urgent strong{color:var(--red)}.toolbar{display:flex;gap:12px;margin-bottom:27px}.toolbar input{flex:1}.toolbar select{width:160px}.section-head{display:flex;justify-content:space-between;align-items:center;margin:26px 0 14px;gap:12px}.section-head h2 span{font-size:14px;color:var(--muted);font-weight:400}.muted{color:var(--muted);font-size:14px}.task{display:flex;gap:14px;align-items:flex-start;background:white;padding:19px 21px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px}.check{width:25px;height:25px;min-width:25px;padding:0;margin-top:3px;border-radius:7px;color:var(--green)}.task.done .check{background:#e5f5ed;border-color:#9ad0b7}.task.done h3{text-decoration:line-through;color:var(--muted)}.task-body{flex:1;min-width:0}.task h3{font-size:16px;margin:0 0 5px;overflow-wrap:anywhere}.meta{display:flex;gap:10px;flex-wrap:wrap;font-size:14px;color:var(--muted)}.due{color:var(--blue)}.due.overdue{color:var(--red)}.task-notes{white-space:pre-wrap;font-size:14px;margin-top:8px;color:var(--muted);overflow-wrap:anywhere}.mini-actions{display:flex;gap:7px;flex-wrap:wrap}.mini-actions button,.mini-actions a{font-size:14px;padding:5px 9px;border:1px solid var(--line);border-radius:7px;background:#fff}.site-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.site{background:white;border:1px solid var(--line);border-radius:13px;padding:21px;display:flex;flex-direction:column;gap:12px}.site-top{display:flex;gap:12px;align-items:center}.site-icon{width:42px;height:42px;min-width:42px;background:#eaf0ff;color:var(--blue);font-size:20px;font-weight:700;display:grid;place-items:center;border-radius:11px}.site h3{font-size:17px;margin:0;overflow-wrap:anywhere}.site-domain{font-size:12px;color:var(--muted);overflow-wrap:anywhere}.site-purpose{font-size:14px;min-height:23px;overflow-wrap:anywhere}.pill{font-size:12px;background:#eef2f8;color:#59677d;border-radius:5px;padding:3px 7px}.account{font-size:14px;background:#f7f9fc;border-radius:7px;padding:9px;overflow-wrap:anywhere}.site .mini-actions{margin-top:auto}.empty{border:1px dashed #bac8df;border-radius:13px;padding:32px;text-align:center;background:#f9fbfe;color:var(--muted)}.empty button{margin-top:12px}footer{margin-top:30px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted)}.text-btn{padding:0;background:transparent;border:0;font-size:14px;color:var(--blue)}dialog{border:0;border-radius:16px;padding:0;max-width:600px;width:calc(100% - 30px);max-height:90vh;box-shadow:0 20px 80px #10234540}dialog::backdrop{background:#0a16377d;backdrop-filter:blur(4px)}.modal{padding:28px}.modal label{display:block;font-size:14px;font-weight:500;margin:14px 0}.modal label input,.modal label select,.modal label textarea{display:block;margin-top:6px}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.dialog-head{display:flex;align-items:center;justify-content:space-between}.dialog-head button{padding:0 10px;font-size:24px}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.hint{font-size:13px;color:var(--muted);line-height:1.7}.error{color:var(--red);font-size:14px}.candidate{border:1px solid var(--line);border-radius:9px;padding:12px;margin-top:12px}.candidate label{display:flex;gap:10px;align-items:flex-start;margin:0}.candidate input[type=checkbox]{width:auto;margin-top:5px}.candidate input[type=datetime-local]{margin-top:8px}#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#152444;color:white;padding:11px 22px;border-radius:9px;z-index:20;display:none;max-width:90vw}body.locked .shell{filter:blur(5px);pointer-events:none}@media(max-width:1150px){main{padding:28px}.site-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.header-actions button{font-size:14px}}@media(max-width:760px){.shell{display:block}aside{height:auto;position:static;padding:15px 18px}.brand{font-size:20px}.brand small,.sidebar-bottom{display:none}nav{display:flex;margin-top:14px;gap:6px}nav button{flex:1;text-align:center;padding:8px}.logo{padding:3px 9px}main{padding:22px 16px}header{align-items:flex-start;flex-direction:column}h1{font-size:25px}.stats{grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0}.stat{padding:12px 16px}.toolbar{flex-wrap:wrap;gap:8px}.toolbar input{flex-basis:100%}.toolbar select{flex:1;width:auto}.site-grid{grid-template-columns:1fr}.task{padding:15px;flex-wrap:wrap}.task>.mini-actions{margin-left:39px}.two{grid-template-columns:1fr;gap:0}.modal{padding:23px}.section-head{align-items:flex-start}.header-actions{width:100%}.header-actions button{flex:1;white-space:nowrap}}
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>课桌 · 作业雷达</title><meta name="description" content="本地管理平台与作业，可选密码加密保护。"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232d57da'/%3E%3Cpath d='M8 9h16v15H8zM8 14h16' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E"><style>:root{--blue:#2d57da;--ink:#172238;--muted:#647187;--line:#e1e6ef;--bg:#f3f6fb;--red:#bf3c40;--green:#197350}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;background:white;border:1px solid var(--line);border-radius:9px;padding:9px 14px;color:var(--ink)}button:hover{border-color:var(--blue);color:var(--blue)}button:disabled{opacity:.55;cursor:wait}button.primary{background:var(--blue);color:white;border-color:var(--blue)}input,select,textarea{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:white;min-width:0;width:100%;color:var(--ink)}input:focus,select:focus,textarea:focus{outline:2px solid #a4b9ff;outline-offset:2px}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}aside{background:#152444;color:#fff;padding:30px 22px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:700}.brand small{display:block;font-size:11px;letter-spacing:2px;color:#a7b6d2}.logo{background:#4168e4;padding:7px 13px;border-radius:12px}nav{display:grid;gap:8px;margin-top:45px}nav button{background:transparent;border:0;color:#b7c5df;text-align:left;padding:13px 16px}nav button.active{background:#2c4166;color:white}.sidebar-bottom{margin-top:auto;color:#afbed8}.sidebar-bottom p{margin-bottom:4px}.sidebar-bottom small{font-size:13px}.sidebar-bottom button{margin-top:18px;width:100%;background:transparent;border-color:#425376;color:#e5ecfa}main{max-width:1440px;width:100%;padding:35px 42px}header{display:flex;justify-content:space-between;align-items:center;gap:20px}h1{font-size:29px;letter-spacing:-1px;line-height:1.3;margin:5px 0 0}h2{font-size:20px;margin:0}.eyebrow{color:var(--muted);font-size:14px}.header-actions{display:flex;gap:8px;flex-wrap:wrap}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:28px 0}.stat{background:white;border:1px solid var(--line);border-radius:13px;padding:18px 22px}.stat strong{display:block;font-size:30px;line-height:1.4}.stat span{color:var(--muted);font-size:14px}.stat.urgent strong{color:var(--red)}.toolbar{display:flex;gap:12px;margin-bottom:27px}.toolbar input{flex:1}.toolbar select{width:160px}.section-head{display:flex;justify-content:space-between;align-items:center;margin:26px 0 14px;gap:12px}.section-head h2 span{font-size:14px;color:var(--muted);font-weight:400}.muted{color:var(--muted);font-size:14px}.task{display:flex;gap:14px;align-items:flex-start;background:white;padding:19px 21px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px}.check{width:25px;height:25px;min-width:25px;padding:0;margin-top:3px;border-radius:7px;color:var(--green)}.task.done .check{background:#e5f5ed;border-color:#9ad0b7}.task.done h3{text-decoration:line-through;color:var(--muted)}.task-body{flex:1;min-width:0}.task h3{font-size:16px;margin:0 0 5px;overflow-wrap:anywhere}.meta{display:flex;gap:10px;flex-wrap:wrap;font-size:14px;color:var(--muted)}.due{color:var(--blue)}.due.overdue{color:var(--red)}.task-notes{white-space:pre-wrap;font-size:14px;margin-top:8px;color:var(--muted);overflow-wrap:anywhere}.mini-actions{display:flex;gap:7px;flex-wrap:wrap}.mini-actions button,.mini-actions a{font-size:14px;padding:5px 9px;border:1px solid var(--line);border-radius:7px;background:#fff}.site-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.site{background:white;border:1px solid var(--line);border-radius:13px;padding:21px;display:flex;flex-direction:column;gap:12px}.site-top{display:flex;gap:12px;align-items:center}.site-icon{width:42px;height:42px;min-width:42px;background:#eaf0ff;color:var(--blue);font-size:20px;font-weight:700;display:grid;place-items:center;border-radius:11px}.site h3{font-size:17px;margin:0;overflow-wrap:anywhere}.site-domain{font-size:12px;color:var(--muted);overflow-wrap:anywhere}.site-purpose{font-size:14px;min-height:23px;overflow-wrap:anywhere}.pill{font-size:12px;background:#eef2f8;color:#59677d;border-radius:5px;padding:3px 7px}.account{font-size:14px;background:#f7f9fc;border-radius:7px;padding:9px;overflow-wrap:anywhere}.site .mini-actions{margin-top:auto}.empty{border:1px dashed #bac8df;border-radius:13px;padding:32px;text-align:center;background:#f9fbfe;color:var(--muted)}.empty button{margin-top:12px}footer{margin-top:30px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted)}.app-version{font-weight:700;font-size:13px;color:#123a9e;background:#dbe6ff;border:1px solid #b5c9f7;border-radius:999px;padding:3px 12px;white-space:nowrap;order:-1}.text-btn{padding:0;background:transparent;border:0;font-size:14px;color:var(--blue)}dialog{border:0;border-radius:16px;padding:0;max-width:600px;width:calc(100% - 30px);max-height:90vh;box-shadow:0 20px 80px #10234540}dialog::backdrop{background:#0a16377d;backdrop-filter:blur(4px)}.modal{padding:28px}.modal label{display:block;font-size:14px;font-weight:500;margin:14px 0}.modal label input,.modal label select,.modal label textarea{display:block;margin-top:6px}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.dialog-head{display:flex;align-items:center;justify-content:space-between}.dialog-head button{padding:0 10px;font-size:24px}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.hint{font-size:13px;color:var(--muted);line-height:1.7}.error{color:var(--red);font-size:14px}.candidate{border:1px solid var(--line);border-radius:9px;padding:12px;margin-top:12px}.candidate label{display:flex;gap:10px;align-items:flex-start;margin:0}.candidate input[type=checkbox]{width:auto;margin-top:5px}.candidate input[type=datetime-local]{margin-top:8px}#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#152444;color:white;padding:11px 22px;border-radius:9px;z-index:20;display:none;max-width:90vw}body.locked .shell{filter:blur(5px);pointer-events:none}@media(max-width:1150px){main{padding:28px}.site-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.header-actions button{font-size:14px}}@media(max-width:760px){.shell{display:block}aside{height:auto;position:static;padding:15px 18px}.brand{font-size:20px}.brand small,.sidebar-bottom{display:none}nav{display:flex;margin-top:14px;gap:6px}nav button{flex:1;text-align:center;padding:8px}.logo{padding:3px 9px}main{padding:22px 16px}header{align-items:flex-start;flex-direction:column}h1{font-size:25px}.stats{grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0}.stat{padding:12px 16px}.toolbar{flex-wrap:wrap;gap:8px}.toolbar input{flex-basis:100%}.toolbar select{flex:1;width:auto}.site-grid{grid-template-columns:1fr}.task{padding:15px;flex-wrap:wrap}.task>.mini-actions{margin-left:39px}.two{grid-template-columns:1fr;gap:0}.modal{padding:23px}.section-head{align-items:flex-start}.header-actions{width:100%}.header-actions button{flex:1;white-space:nowrap}}
+
+[hidden]{display:none!important}.header-actions #quickLockBtn{flex:0 0 auto}.modal input[type=password]{font-family:inherit}
+
+@media(max-width:760px){.task>.mini-actions{flex-basis:calc(100% - 39px)}.task-body{flex-basis:calc(100% - 39px)}.header-actions{gap:6px}.header-actions button{padding:9px 10px}}
+
+.task-group{font-size:15px;color:var(--muted);margin:20px 0 10px}.task-group span{font-weight:400;background:#e5ebf4;padding:2px 8px;border-radius:20px;margin-left:6px}.toolbar{flex-wrap:wrap}.toolbar input{min-width:200px}.toolbar select{width:145px}#radarJson{font-family:Consolas,monospace;font-size:13px}.candidate small{display:block}
+
+#suggestionList{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.suggestion{text-align:left;padding:16px;background:#eaf0ff;border-color:#d6e1fb}.suggestion strong{display:block;overflow-wrap:anywhere;margin-bottom:6px}.suggestion span{font-size:13px}@media(max-width:760px){#suggestionList{grid-template-columns:1fr}.header-actions{flex-wrap:wrap}.header-actions button{flex:1 1 30%}}
+
+#radarMergeInfo{white-space:pre-line}
 </style></head>
-<body><div class="shell"><aside><div class="brand"><span class="logo">课</span><div>课桌<small>STUDY DESK</small></div></div><nav><button class="active" data-view="overview">总览</button><button data-view="sites">我的网站</button><button data-view="tasks">作业清单</button></nav><div class="sidebar-bottom"><p>本地资料库</p><small>数据保存在当前浏览器<br>导出备份后可迁移设备</small><button id="lockBtn">锁定资料库</button></div></aside><main><header><div><div class="eyebrow">我的学习工作台</div><h1 id="viewTitle">今天先做什么？</h1></div><div class="header-actions"><button id="exportBtn">导出备份</button><button id="importBtn">导入备份</button><button class="primary" id="addTaskBtn">＋ 添加作业</button></div></header><div class="stats" id="stats"></div><div class="toolbar"><input id="search" placeholder="搜索网站、课程或作业" aria-label="搜索网站、课程或作业"><select id="categoryFilter" aria-label="网站分类"><option value="">全部分类</option><option>课程</option><option>作业</option><option>资料</option><option>工具</option><option>其他</option></select><select id="statusFilter" aria-label="作业状态"><option value="open">待完成作业</option><option value="all">所有作业</option><option value="done">已完成作业</option></select></div><section id="taskSection"><div class="section-head"><h2>作业清单 <span id="taskCount"></span></h2><span class="muted">按截止时间排列</span></div><div id="taskList"></div></section><section id="siteSection"><div class="section-head"><h2>网站入口 <span id="siteCount"></span></h2><button id="addSiteBtn">＋ 添加网站</button></div><div class="site-grid" id="siteList"></div></section><footer><span id="saveState">已加密保存到本地</span><button id="demoBtn" class="text-btn">加载示例</button><button id="readTasksBtn" class="text-btn">从网页文本读取作业</button></footer></main></div>
-<dialog id="vaultDialog"><form id="vaultForm" class="modal"><div class="eyebrow">课桌 · 本地资料库</div><h2 id="vaultTitle"></h2><p id="vaultDesc" class="muted"></p><label>主密码<input id="masterPassword" type="password" autocomplete="current-password" minlength="10" required></label><label id="confirmLabel">再次输入<input id="confirmPassword" type="password" autocomplete="new-password"></label><p class="error" id="vaultError" role="alert"></p><button class="primary" id="unlockBtn">打开资料库</button><p class="hint">主密码用于加密本地数据，请妥善保管。忘记密码无法恢复；清除浏览器数据前请导出备份。</p></form></dialog>
-<dialog id="siteDialog"><form id="siteForm" class="modal"><div class="dialog-head"><h2 id="siteDialogTitle">添加网站</h2><button type="button" data-close="siteDialog" aria-label="关闭">×</button></div><input name="id" type="hidden"><div class="two"><label>网站名称<input name="name" required maxlength="100" placeholder="如：大学物理课程平台"></label><label>分类<select name="category"><option>课程</option><option>作业</option><option>资料</option><option>工具</option><option>其他</option></select></label></div><label>网站地址<input name="url" type="url" required placeholder="https://..."></label><label>用途<input name="purpose" placeholder="看课件、交作业、查看通知…" maxlength="200"></label><label>作业页面地址（选填）<input name="assignmentUrl" type="url" placeholder="可直接跳到作业列表"></label><div class="two"><label>登录账号<input name="account" autocomplete="off" placeholder="学号 / 邮箱 / 用户名"></label><label>登录密码（选填）<input name="password" type="password" autocomplete="new-password" placeholder="加密保存"></label></div><label>备注<textarea name="notes" rows="2" placeholder="登录方式、提交要求等"></textarea></label><p class="hint">打开网站后使用浏览器登录。此原型可复制账号和密码，不会自动登录。</p><div class="actions"><button type="button" data-close="siteDialog">取消</button><button class="primary">保存网站</button></div></form></dialog>
-<dialog id="taskDialog"><form id="taskForm" class="modal"><div class="dialog-head"><h2 id="taskDialogTitle">添加作业</h2><button type="button" data-close="taskDialog" aria-label="关闭">×</button></div><input name="id" type="hidden"><label>作业名称<input name="title" required maxlength="200" placeholder="如：运动学习题 第 7–15 题"></label><div class="two"><label>所属网站<select name="siteId" id="taskSiteSelect"></select></label><label>课程 / 项目<input name="course" placeholder="大学物理"></label></div><div class="two"><label>截止时间<input name="due" type="datetime-local"></label><label>状态<select name="status"><option value="open">待完成</option><option value="done">已完成</option></select></label></div><label>作业链接（选填）<input name="url" type="url" placeholder="https://..."></label><label>要求 / 备注<textarea name="notes" rows="3"></textarea></label><div class="actions"><button type="button" data-close="taskDialog">取消</button><button class="primary">保存作业</button></div></form></dialog>
-<dialog id="readerDialog"><form id="readerForm" class="modal"><div class="dialog-head"><h2>从网页文本读取作业</h2><button type="button" data-close="readerDialog" aria-label="关闭">×</button></div><p class="muted">在网站上复制作业列表，粘贴到这里。每行生成一个候选作业，日期会尝试识别；确认后再保存。</p><label>所属网站<select id="readerSite"></select></label><label>网页文本<textarea id="readerText" rows="7" placeholder="运动学习题 截止 2026-10-08 23:59&#10;线性代数练习 截止 2026年10月10日"></textarea></label><button class="primary" type="submit">读取候选作业</button><div id="readerResults"></div><p class="hint">当前支持逐行文本导入。自动读取已登录网站需要为具体网站添加适配器。</p></form></dialog>
-<input type="file" id="backupInput" accept="application/json,.json" hidden><div id="toast" role="status"></div><script>/* Local prototype. No requests to external services. See HANDOFF.md for adapter contracts. */
+<body><div class="shell"><aside><div class="brand"><span class="logo">课</span><div>课桌<small>STUDY DESK</small></div></div><nav><button class="active" data-view="overview">总览</button><button data-view="sites">我的网站</button><button data-view="tasks">作业清单</button></nav><div class="sidebar-bottom"><p>本地资料库</p><small>数据保存在当前浏览器<br>导出备份后可迁移设备</small><button id="lockBtn">锁定资料库</button></div></aside><main><header><div><div class="eyebrow">我的学习工作台</div><h1 id="viewTitle">今天先做什么？</h1></div><div class="header-actions"><button id="exportBtn">导出备份</button><button id="importBtn">导入备份</button><button id="protectionBtn">密码设置</button><button id="quickLockBtn">锁定</button><button class="primary" id="addTaskBtn">＋ 添加作业</button></div></header><div class="stats" id="stats"></div><section id="suggestionSection"><div class="section-head"><h2>接下来建议完成</h2><span class="muted">最多三项</span></div><div id="suggestionList"></div></section><div class="toolbar"><input id="search" placeholder="搜索网站、课程或作业" aria-label="搜索网站、课程或作业"><select id="categoryFilter" aria-label="网站分类"><option value="">全部分类</option><option>课程</option><option>作业</option><option>资料</option><option>工具</option><option>其他</option></select><select id="statusFilter" aria-label="作业状态"><option value="open">未完成作业</option><option value="doing">进行中作业</option><option value="all">所有作业</option><option value="done">已完成作业</option></select><select id="dueFilter" aria-label="截止分组"><option value="">全部截止</option><option value="late">已逾期</option><option value="today">今天截止</option><option value="tomorrow">明天截止</option><option value="soon">未来三天</option><option value="week">未来七天</option><option value="none">未设截止</option></select></div><section id="taskSection"><div class="section-head"><h2>作业清单 <span id="taskCount"></span></h2><span class="muted">按截止分组排列</span></div><div id="taskList"></div></section><section id="siteSection"><div class="section-head"><h2>网站入口 <span id="siteCount"></span></h2><button id="addSiteBtn">＋ 添加网站</button></div><div class="site-grid" id="siteList"></div></section><footer><span class="app-version" id="appVersion" aria-label="课桌离线版版本号 0.5.0">版本 v0.5.0</span><span id="modeNote"></span><a href="?demo=1">独立演示</a><span id="saveState">已加密保存到本地</span><button id="demoBtn" class="text-btn">添加示例</button><button id="radarMergeBtn" class="text-btn">导入平台作业 JSON</button><button id="briefBtn" class="text-btn">复制今日简报</button><button id="icsBtn" class="text-btn">导出日历</button><button id="reminderExportBtn" class="text-btn">导出提醒数据</button><button id="bindReminderBtn" class="text-btn">绑定提醒文件</button><span id="reminderState"></span><button id="ptaToolBtn" class="text-btn">PTA 读取工具</button><button id="readTasksBtn" class="text-btn">从网页文本读取作业</button></footer></main></div>
+<dialog id="vaultDialog"><form id="vaultForm" class="modal"><div class="eyebrow">课桌 · 本地资料库</div><h2 id="vaultTitle"></h2><p id="vaultDesc" class="muted"></p><label id="masterLabel">主密码<input id="masterPassword" type="password" autocomplete="current-password" minlength="10" required></label><label id="confirmLabel">再次输入<input id="confirmPassword" type="password" autocomplete="new-password"></label><p class="error" id="vaultError" role="alert"></p><button class="primary" id="unlockBtn">打开资料库</button><button type="button" id="skipProtectionBtn">不开启密码，直接使用</button><button type="button" id="recoverVaultBtn">从加密备份恢复</button><p class="hint">主密码用于加密本地数据，请妥善保管。忘记密码无法恢复；清除浏览器数据前请导出备份。</p></form></dialog>
+<dialog id="siteDialog"><form id="siteForm" class="modal"><div class="dialog-head"><h2 id="siteDialogTitle">添加网站</h2><button type="button" data-close="siteDialog" aria-label="关闭">×</button></div><input name="id" type="hidden"><div class="two"><label>网站名称<input name="name" required maxlength="100" placeholder="如：大学物理课程平台"></label><label>分类<select name="category"><option>课程</option><option>作业</option><option>资料</option><option>工具</option><option>其他</option></select></label></div><label>网站地址（群聊等可留空）<input name="url" type="url" placeholder="https://..."></label><label>用途<input name="purpose" placeholder="看课件、交作业、查看通知…" maxlength="200"></label><label>作业页面地址（选填）<input name="assignmentUrl" type="url" placeholder="可直接跳到作业列表"></label><label>登录方式（选填）<input name="loginHint" placeholder="统一身份认证 / 扫码"></label><label>备注<textarea name="notes" rows="2" placeholder="登录方式、提交要求等"></textarea></label><p class="hint">打开网站后使用浏览器登录。账号和密码由 Edge 管理，课桌只保存平台入口与作业。</p><div class="actions"><button type="button" data-close="siteDialog">取消</button><button class="primary">保存网站</button></div></form></dialog>
+<dialog id="taskDialog"><form id="taskForm" class="modal"><div class="dialog-head"><h2 id="taskDialogTitle">添加作业</h2><button type="button" data-close="taskDialog" aria-label="关闭">×</button></div><input name="id" type="hidden"><label>作业名称<input name="title" required maxlength="200" placeholder="如：运动学习题 第 7–15 题"></label><div class="two"><label>所属网站<select name="siteId" id="taskSiteSelect"></select></label><label>课程 / 项目<input name="course" placeholder="大学物理"></label></div><div class="two"><label>截止时间<input name="due" type="datetime-local"></label><label>状态<select name="status"><option value="open">待完成</option><option value="doing">进行中</option><option value="done">已完成</option></select></label></div><label>预计耗时（分钟，选填）<input name="est" type="number" min="0" max="100000"></label><label>作业链接（选填）<input name="url" type="url" placeholder="https://..."></label><label>要求 / 备注<textarea name="notes" rows="3"></textarea></label><div class="actions"><button type="button" data-close="taskDialog">取消</button><button class="primary">保存作业</button></div></form></dialog>
+<dialog id="readerDialog"><form id="readerForm" class="modal"><div class="dialog-head"><h2>从网页文本读取作业</h2><button type="button" data-close="readerDialog" aria-label="关闭">×</button></div><p class="muted">在网站上复制作业列表，粘贴到这里。支持普通文本、标题 | 平台 | 截止 | 链接，以及旧版 RADAR| 书签格式。日期有疑问会标记，请核对后保存。</p><label>所属网站<select id="readerSite"></select></label><label>课程 / 项目（选填）<input id="readerCourse" maxlength="200" placeholder="如：大学物理"></label><label>网页文本<textarea id="readerText" rows="7" placeholder="运动学习题 截止 2026-10-08 23:59&#10;线性代数练习 截止 2026年10月10日"></textarea></label><button class="primary" type="submit">读取候选作业</button><div id="readerResults"></div><p class="hint">当前支持逐行文本导入。自动读取已登录网站需要为具体网站添加适配器。</p></form></dialog>
+<dialog id="restoreDialog"><form id="restoreForm" class="modal"><div class="dialog-head"><h2>验证并恢复备份</h2><button type="button" data-close="restoreDialog" aria-label="关闭">×</button></div><p class="muted" id="restoreInfo"></p><label id="restorePasswordLabel">备份的主密码<input id="restorePassword" type="password" autocomplete="off" required></label><p class="error" id="restoreError" role="alert"></p><p class="hint">先验证密码和数据。验证成功后再确认替换；原资料库会自动下载一份加密备份，请确认下载成功。</p><div class="actions"><button type="button" data-close="restoreDialog">取消</button><button class="primary" id="restoreBtn">验证备份</button></div></form></dialog>
+<dialog id="protectionDialog"><form id="protectionForm" class="modal"><div class="dialog-head"><h2>资料保护方式</h2><button type="button" data-close="protectionDialog" aria-label="关闭">×</button></div><p id="protectionInfo" class="muted"></p><label>保存方式<select id="protectionMode"><option value="encrypted">使用主密码加密</option><option value="plain">不开启密码（明文保存）</option></select></label><label id="currentProtectionLabel">当前主密码<input id="currentProtectionPassword" type="password" autocomplete="current-password"></label><label id="newProtectionLabel">新主密码<input id="newProtectionPassword" type="password" minlength="10" autocomplete="new-password"></label><label id="newProtectionConfirmLabel">确认新主密码<input id="newProtectionConfirm" type="password" minlength="10" autocomplete="new-password"></label><p class="hint">关闭保护后，本地资料和导出备份会以明文保存。网站登录由 Edge 管理，课桌不提供网站账号和密码的填写入口。</p><p id="protectionError" class="error" role="alert"></p><div class="actions"><button type="button" data-close="protectionDialog">取消</button><button class="primary" id="saveProtectionBtn">保存保护方式</button></div></form></dialog>
+<dialog id="radarMergeDialog"><form id="radarMergeForm" class="modal"><div class="dialog-head"><h2>追加导入平台作业</h2><button type="button" data-close="radarMergeDialog" aria-label="关闭">×</button></div><p class="muted">从 PTA 读取工具或旧版作业雷达导出 JSON，选择文件或粘贴内容。先预览再确认，不覆盖现有任务或完成状态。</p><button type="button" id="radarFileBtn">选择作业 JSON</button><label>作业 JSON<textarea id="radarJson" rows="6" spellcheck="false"></textarea></label><p id="radarMergeInfo" class="muted"></p><p id="radarMergeError" class="error" role="alert"></p><div class="actions"><button type="button" data-close="radarMergeDialog">取消</button><button class="primary" id="radarPreviewBtn">预览追加结果</button><button type="button" class="primary" id="radarCommitBtn" hidden>确认追加</button></div></form></dialog>
+<dialog id="ptaToolDialog"><div class="modal"><div class="dialog-head"><h2>PTA 读取工具</h2><button type="button" data-close="ptaToolDialog">关闭</button></div><p>将下面的链接拖到 Edge 收藏夹栏。在已登录的 PTA 首页、活跃题目集或作业概览页点击该收藏，下载 PTA作业.json，再回到课桌点击“导入平台作业 JSON”预览追加。</p><a id="ptaBookmark">读取 PTA 作业</a><p>也可新建收藏，将下方代码设为收藏地址。</p><textarea id="ptaBookmarkCode" rows="4" readonly></textarea><button id="copyPtaBookmark" type="button">复制收藏地址</button><p class="hint">只读取当前页面可见作业，不读取密码或 Cookie，不发送网络请求。相对截止时间不猜测；题目已作答不等于已完成。列表有多页时逐页读取。重复导入跳过，不覆盖现有状态和截止时间。</p></div></dialog><input type="file" id="radarInput" accept="application/json,.json" hidden><input type="file" id="backupInput" accept="application/json,.json" hidden><div id="toast" role="status"></div><script>'use strict';
+(function(root){
+ function migrateState(value){
+  if(value?.schemaVersion!==1||!Array.isArray(value.sites)||!Array.isArray(value.tasks))throw Error('不支持的资料版本或数据结构');
+  return structuredClone(value);
+ }
+ const normalized=value=>String(value||'').trim().replace(/\s+/g,' ');
+ function duplicateOf(existing,candidate){
+  return existing.find(task=>{
+   if((task.siteId||'')!==(candidate.siteId||''))return false;
+   if(task.externalId&&candidate.externalId)return task.externalId===candidate.externalId;
+   return normalized(task.title)===normalized(candidate.title)&&(task.due?new Date(task.due).toISOString():'')===(candidate.due?new Date(candidate.due).toISOString():'');
+  });
+ }
+ function previewCandidates(existing,incoming){
+  const accepted=[];return incoming.map(task=>{
+   const exact=duplicateOf(existing.concat(accepted),task);
+   const possible=!exact&&existing.concat(accepted).some(x=>(x.siteId||'')===(task.siteId||'')&&normalized(x.title)===normalized(task.title));
+   if(!exact)accepted.push(task);return {...task,duplicate:!!exact,possibleDuplicate:possible};
+  });
+ }
+ function mergeTasks(existing,incoming){
+  const added=[];let skipped=0;for(const task of incoming){if(duplicateOf(existing.concat(added),task)){skipped++;continue;}added.push(task);}return {added,skipped};
+ }
+ function priority(task,now=Date.now()){
+  if(task.status==='done')return 6;if(!task.due)return 4;
+  const left=new Date(task.due).getTime()-Number(now);
+  return left<0?0:left<=86400000?1:left<=72*3600000?2:left<=7*86400000?3:5;
+ }
+ function sortTasks(tasks,now=Date.now()){
+  return tasks.slice().sort((a,b)=>priority(a,now)-priority(b,now)||((a.due?new Date(a.due).getTime():Infinity)-(b.due?new Date(b.due).getTime():Infinity))||normalized(a.title).localeCompare(normalized(b.title),'zh-CN'));
+ }
+ function suggestions(tasks,now=Date.now()){return sortTasks(tasks.filter(x=>x.status!=='done'),now).slice(0,3);}
+ const api={migrateState,duplicateOf,previewCandidates,mergeTasks,priority,sortTasks,suggestions};
+ root.StudyDeskCore=api;if(typeof module!=='undefined')module.exports=api;
+})(globalThis);
+</script><script>'use strict';
+(function(root){
+ const groups=[['late','已逾期'],['today','今天截止'],['tomorrow','明天截止'],['soon','未来三天'],['week','未来七天'],['none','未设截止'],['later','更远'],['done','已完成']];
+ function groupOf(t,now=new Date()){
+  if(t.status==='done')return 'done';if(!t.due)return 'none';
+  const due=new Date(t.due);if(due<now)return 'late';
+  const day=d=>Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());
+  const left=(day(due)-day(now))/86400000;
+  const hours=(due-now)/3600000;return left===0?'today':left===1?'tomorrow':hours<=72?'soon':hours<=168?'week':'later';
+ }
+ function url(value){if(!value)return '';if(typeof value!=='string')throw Error('网址字段不正确');const u=new URL(value);if(!['http:','https:'].includes(u.protocol))throw Error('网址只支持 http / https');return u.href;}
+ function text(value){if(value==null)return '';if(typeof value!=='string')throw Error('文字字段不正确');return value;}
+ function dueISO(value){
+  if(!value)return '';if(typeof value!=='string')throw Error('截止时间字段不正确');
+  const m=value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?(Z|[+-]\d{2}:\d{2})?$/);
+  if(!m)throw Error('截止时间格式不正确');
+  const y=+m[1],mo=+m[2],d=+m[3],h=+m[4],mi=+m[5],sec=+(m[6]||0),check=new Date(Date.UTC(y,mo-1,d));
+  if(check.getUTCFullYear()!==y||check.getUTCMonth()!==mo-1||check.getUTCDate()!==d||h>23||mi>59||sec>59)throw Error('截止日期不存在');
+  const date=new Date(value);if(Number.isNaN(date.getTime()))throw Error('截止时间不正确');return date.toISOString();
+ }
+ const fingerprint=t=>JSON.stringify([t.siteId||'',t.title.trim().replace(/\s+/g,' '),t.due?dueISO(t.due):'']);
+ function mergeLegacy(current,legacy,newId){
+  if(legacy?.version!==1||!Array.isArray(legacy.platforms)||!Array.isArray(legacy.tasks))throw Error('需要作业雷达 v1 JSON');
+  const state=structuredClone(current),map=new Map(),pids=new Set(),tids=new Set();let sitesAdded=0,tasksAdded=0,skipped=0;
+  for(const p of legacy.platforms){
+   if(!p||typeof p.id!=='string'||!p.id||pids.has(p.id)||!text(p.name).trim())throw Error('平台数据不完整或 ID 重复');pids.add(p.id);
+   const name=p.name.trim(),address=url(p.url),login=text(p.login),notes=text(p.note);
+   let hit=state.sites.find(s=>(address&&s.url===address)||(s.name===name&&(!address||!s.url)));
+   if(!hit){hit={id:newId(),name,url:address,category:'课程',purpose:'从作业雷达迁移',assignmentUrl:'',account:'',password:'',loginHint:login,notes,integration:{mode:'manual',adapterId:null,lastSyncAt:null}};state.sites.push(hit);sitesAdded++;}
+   map.set(p.id,hit.id);
+  }
+  const seen=new Set(state.tasks.map(fingerprint));
+  for(const t of legacy.tasks){
+   if(!t||typeof t.id!=='string'||!t.id||tids.has(t.id)||!text(t.title).trim()||!['todo','doing','done'].includes(t.status))throw Error('作业数据不完整或状态不受支持');tids.add(t.id);
+   const platformId=text(t.platformId);if(platformId&&!map.has(platformId))throw Error('作业关联的平台不存在');
+   const estimate=t.est===''||t.est==null?'':Number(t.est);if(estimate!==''&&(!Number.isFinite(estimate)||estimate<0||estimate>100000))throw Error('预计耗时不正确');
+   const incoming={id:newId(),siteId:map.get(platformId)||'',title:t.title.trim(),course:text(t.course),due:dueISO(t.due),status:t.status==='todo'?'open':t.status,url:url(t.url),notes:text(t.note),est:estimate,source:'radar',externalId:t.id};
+   const stamp=fingerprint(incoming);
+   if(seen.has(stamp)||state.tasks.some(x=>x.source==='radar'&&x.externalId===t.id&&x.siteId===incoming.siteId)){skipped++;continue;}
+   seen.add(stamp);state.tasks.push(incoming);tasksAdded++;
+  }
+  return {state,sitesAdded,tasksAdded,skipped};
+ }
+ function reminderData(state){
+  return {version:1,platforms:state.sites.map(s=>({id:s.id,name:s.name,url:s.url||''})),tasks:state.tasks.map(t=>({id:t.id,title:t.title,platformId:t.siteId||'',course:t.course||'',due:t.due||'',est:t.est||'',status:t.status==='open'?'todo':t.status,url:t.url||'',note:t.notes||''})),settings:{}};
+ }
+ const escapeICS=value=>String(value??'').replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r\n|\r|\n/g,'\\n');
+ const utc=value=>new Date(value).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');
+ function fold(line){
+  const encoder=new TextEncoder();let result='',chunk='',bytes=0;
+  for(const ch of line){const size=encoder.encode(ch).length;if(bytes+size>75){result+=chunk+'\r\n';chunk=' ';bytes=1;}chunk+=ch;bytes+=size;}return result+chunk;
+ }
+ function calendar(state,onlyOpen=true,now=new Date()){
+  const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//StudyDesk Radar//CN','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:作业雷达'];
+  for(const t of state.tasks.filter(t=>t.due&&(!onlyOpen||t.status!=='done'))){
+   const site=state.sites.find(s=>s.id===t.siteId),description=[t.course&&'课程：'+t.course,site&&'平台：'+site.name,t.est&&'预计耗时：'+t.est+' 分钟',t.notes].filter(Boolean).join('\n');
+   lines.push('BEGIN:VEVENT','UID:'+encodeURIComponent(t.id)+'@study-desk','DTSTAMP:'+utc(now),'DTSTART:'+utc(t.due),'DTEND:'+utc(new Date(new Date(t.due).getTime()+30*60000)),'SUMMARY:'+escapeICS('【作业截止】'+t.title));
+   if(description)lines.push('DESCRIPTION:'+escapeICS(description));if(t.url)lines.push('URL:'+escapeICS(url(t.url)));
+   for(const trigger of ['-P1D','-PT2H'])lines.push('BEGIN:VALARM','TRIGGER:'+trigger,'ACTION:DISPLAY','DESCRIPTION:'+escapeICS('作业提醒：'+t.title),'END:VALARM');
+   lines.push('END:VEVENT');
+  }
+  return lines.concat('END:VCALENDAR').map(fold).join('\r\n')+'\r\n';
+ }
+ function brief(state,now=new Date()){
+  const lines=['【作业简报】'+now.toLocaleDateString('zh-CN')];
+  for(const [group,label] of groups){if(['done','week','later'].includes(group))continue;const tasks=state.tasks.filter(t=>groupOf(t,now)===group);if(!tasks.length)continue;lines.push('',`${label} ${tasks.length} 项`);for(const t of tasks)lines.push('· '+t.title+(t.due?' — '+new Date(t.due).toLocaleString('zh-CN'):''));}
+  if(lines.length===1)lines.push('近期没有待完成作业。');return lines.join('\n');
+ }
+ function parseQuick(input,sites=[],now=new Date()){
+  const local=date=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}T${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
+  return input.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).slice(0,100).map(line=>{
+   const radar=line.startsWith('RADAR|'),parts=line.split('|').map(x=>x.trim());let title=radar?parts[1]:parts[0],link='',siteId='',notes='',due='',warning='';
+   if(radar){link=url(parts[2]);notes=parts.slice(3).join('|');}
+   else if(parts.length>1){for(const segment of parts.slice(1)){if(/^https?:\/\//i.test(segment))link=url(segment);const site=sites.find(s=>s.name===segment);if(site)siteId=site.id;}notes=parts.slice(1).filter(x=>!/^https?:\/\//i.test(x)).join(' | ');}
+   const m=line.match(/(20\d{2})[-年/.](\d{1,2})[-月/.](\d{1,2})日?(?:\s*(\d{1,2})[:：](\d{2}))?/);
+   if(m){try{const iso=dueISO(`${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}T${m[4]===undefined?'23':m[4].padStart(2,'0')}:${m[5]||'59'}`);due=local(new Date(iso));}catch{warning='日期无效，请核对';}}
+   else{const short=line.match(/(?:^|[^\d])(\d{1,2})[-月/.](\d{1,2})日?(?:\s*(\d{1,2})[:：](\d{2}))?/);if(short){try{due=local(new Date(dueISO(`${now.getFullYear()}-${short[1].padStart(2,'0')}-${short[2].padStart(2,'0')}T${short[3]===undefined?'23':short[3].padStart(2,'0')}:${short[4]||'59'}`)));warning='年份暂按今年，请核对';}catch{warning='日期无效，请核对';}}}
+   return {title:title||line,url:link,siteId,notes,due,warning};
+  });
+ }
+ const api={groups,groupOf,mergeLegacy,reminderData,calendar,brief,parseQuick,dueISO};
+ root.StudyDeskRadar=api;if(typeof module!=='undefined')module.exports=api;
+})(globalThis);
+</script><script>'use strict';
+(function(root){
+ // Reads visible PTA cards only. No network, cookies, passwords, or hidden app state.
+ function capture(doc,loc){
+  if(loc.hostname!=='pintia.cn')throw Error('请在 PTA 作业列表或作业概览页使用');
+  function deadline(text){
+   const m=text.match(/(?:关闭时间[:：]?|将于|答题结束时间)\s*(20\d{2})[-/](\d{2})[-/](\d{2})\s+(\d{2}):(\d{2})(?::(\d{2}))?/);
+   if(!m)return '';
+   const stamp=m[1]+'-'+m[2]+'-'+m[3]+'T'+m[4]+':'+m[5]+':'+(m[6]||'00')+'+08:00',d=new Date(stamp);
+   if(Number.isNaN(d.getTime())||+m[4]>23||+m[5]>59||+m[6]>59||new Date(d.getTime()+8*3600000).toISOString().slice(0,10)!==stamp.slice(0,10))throw Error('PTA 截止日期无效');
+   return d.toISOString();
+  }
+  const tasks=[],seen=new Set();
+  function add(id,title,text,overview){
+   if(seen.has(id)||!title.trim())return;seen.add(id);
+   const due=deadline(text),progress=overview&&text.match(/(\d+)\s*%\s*答题进度/);
+   tasks.push({id:'pta:'+id,title:title.trim(),platformId:'pta',course:'',due,status:overview&&/答题中/.test(text)?'doing':'todo',url:'https://pintia.cn/problem-sets/'+id+'/exam/overview',note:(due?'PTA 页面读取；北京时间。':'页面仅有相对时间或未显示截止，请打开概览核对后手动填写。')+(progress?' 答题进度 '+progress[1]+'%；不自动标记完成。':''),est:''});
+  }
+  const overview=loc.pathname.match(/^\/problem-sets\/(\d+)\/exam\/overview\/?$/);
+  if(overview){add(overview[1],doc.title.replace(/^概览\s*-\s*/,''),doc.body.innerText,true);}
+  else{
+   for(const a of doc.querySelectorAll('a[href]')){
+    const u=new URL(a.getAttribute('href'),loc.href),m=u.pathname.match(/^\/problem-sets\/(\d+)\/(?:overview|exam)\/?$/),text=a.innerText;
+    if(u.hostname!=='pintia.cn'||!m||!/(?:关闭时间|将于[\s\S]*关闭)/.test(text))continue;
+    const titled=a.querySelector('[title]'),title=titled?.getAttribute('title')||text.split(/(?:关闭时间|将于)/)[0];add(m[1],title,text,false);
+   }
+  }
+  if(!tasks.length)throw Error('未找到可见的课程作业。请打开 PTA 首页、活跃题目集或作业概览；列表只读取当前页。');
+  return {version:1,platforms:[{id:'pta',name:'拼题A PTA（程序设计上机练习和作业）',url:'https://pintia.cn/',login:'使用 Edge 登录',note:''}],tasks,settings:{}};
+ }
+ function bookmark(){return 'javascript:'+encodeURIComponent('void(function(){try{const data=('+capture.toString()+')(document,location);const href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=href;a.download="PTA作业.json";a.click();setTimeout(()=>URL.revokeObjectURL(href),1000);alert("已读取 "+data.tasks.length+" 份作业。到课桌的导入平台作业 JSON 中预览追加。无精确截止时间的作业请核对。");}catch(e){alert(e.message);}})()');}
+ const api={capture,bookmark};root.StudyDeskPTA=api;if(typeof module!=='undefined')module.exports=api;
+})(globalThis);
+</script><script>/* Local prototype. No requests to external services. See HANDOFF.md for adapter contracts. */
 'use strict';
-const STORAGE_KEY='study-desk.v1', ITERATIONS=250000;
+const DEMO_MODE=typeof location!=='undefined'&&new URLSearchParams(location.search).get('demo')==='1';
+const STORAGE_KEY=DEMO_MODE?'study-desk.demo.v1':'study-desk.v1', ITERATIONS=250000;
 const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>crypto.randomUUID(), empty=()=>({schemaVersion:1,sites:[],tasks:[]});
-let data=empty(), key=null, envelope=null, view='overview', candidates=[], idleTimer, saveQueue=Promise.resolve();
-const b64=a=>btoa(String.fromCharCode(...a)), unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
-const safeUrl=v=>{if(!v)return '';const u=new URL(v);if(!['https:','http:'].includes(u.protocol))throw Error('网址需要使用 http 或 https');return u.href;};
+let data=empty(), key=null, envelope=null, view='overview', candidates=[], idleTimer, saveQueue=Promise.resolve(), committed=empty(), pendingRestore=null, saving=false, unlocked=false, storedVersion=null, radarPreview=null, reminderHandle=null, reminderQueue=Promise.resolve();
+const b64=a=>{let text='';for(let i=0;i<a.length;i+=0x8000)text+=String.fromCharCode(...a.subarray(i,i+0x8000));return btoa(text);}, unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const safeUrl=v=>{if(!v)return '';if(typeof v!=='string')throw Error('网址格式不正确');const u=new URL(v);if(!['https:','http:'].includes(u.protocol))throw Error('网址需要使用 http 或 https');return u.href;};
 const localDate=d=>{const t=new Date(d);return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}T${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;};
 async function derive(pass,salt){const raw=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:ITERATIONS,hash:'SHA-256'},raw,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);}
 async function encryptState(snapshot,k,salt){const iv=crypto.getRandomValues(new Uint8Array(12));const cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv},k,new TextEncoder().encode(JSON.stringify(snapshot)));return {format:'study-desk-vault',version:1,kdf:'PBKDF2-SHA256',iterations:ITERATIONS,salt,iv:b64(iv),ciphertext:b64(new Uint8Array(cipher))};}
-function validateState(s){if(s?.schemaVersion!==1||!Array.isArray(s.sites)||!Array.isArray(s.tasks))throw Error('数据格式不受支持');const ids=new Set();for(const x of s.sites){if(typeof x.id!=='string'||ids.has(x.id)||typeof x.name!=='string'||!x.name)throw Error('网站数据不完整');ids.add(x.id);x.url=safeUrl(x.url);x.assignmentUrl=safeUrl(x.assignmentUrl);}const taskIds=new Set();for(const t of s.tasks){if(typeof t.id!=='string'||taskIds.has(t.id)||typeof t.title!=='string'||!t.title)throw Error('作业数据不完整');taskIds.add(t.id);t.url=safeUrl(t.url);if(!['open','done'].includes(t.status))throw Error('作业状态不受支持');if(t.due&&Number.isNaN(new Date(t.due).getTime()))throw Error('截止时间不正确');}return s;}
-function validateEnvelope(v){if(v?.format!=='study-desk-vault'||v.version!==1||v.iterations!==ITERATIONS||typeof v.ciphertext!=='string'||unb64(v.salt).length!==16||unb64(v.iv).length!==12)throw Error('不是有效的加密备份');return v;}
-function persist(){const snapshot=structuredClone(data),k=key,salt=envelope.salt;$('#saveState').textContent='正在保存…';const job=saveQueue.catch(()=>{}).then(async()=>{const e=await encryptState(snapshot,k,salt);localStorage.setItem(STORAGE_KEY,JSON.stringify(e));envelope=e;$('#saveState').textContent='已加密保存到本地';});saveQueue=job;return job;}
+function validateState(s){
+ if(s?.schemaVersion!==1||!Array.isArray(s.sites)||!Array.isArray(s.tasks))throw Error('数据格式不受支持');
+ const ids=new Set(), taskIds=new Set();
+ const strings=(x,names)=>{for(const n of names)if(x[n]!=null&&typeof x[n]!=='string')throw Error('字段格式不正确：'+n);};
+ for(const x of s.sites){
+  if(!x||typeof x.id!=='string'||!x.id||ids.has(x.id)||typeof x.name!=='string'||!x.name.trim())throw Error('网站数据不完整');
+  strings(x,['url','assignmentUrl','category','purpose','account','password','notes','loginHint']);
+  ids.add(x.id);x.url=safeUrl(x.url);x.assignmentUrl=safeUrl(x.assignmentUrl);
+ }
+ for(const t of s.tasks){
+  if(!t||typeof t.id!=='string'||!t.id||taskIds.has(t.id)||typeof t.title!=='string'||!t.title.trim())throw Error('作业数据不完整');
+  strings(t,['url','siteId','course','due','notes','source','externalId']);taskIds.add(t.id);t.url=safeUrl(t.url);
+  if(!['open','doing','done'].includes(t.status))throw Error('作业状态不受支持');
+  if(t.due&&Number.isNaN(new Date(t.due).getTime()))throw Error('截止时间不正确');
+  if(t.est!=null&&t.est!==''&&(!Number.isFinite(Number(t.est))||Number(t.est)<0||Number(t.est)>100000))throw Error('预计耗时不正确');
+  if(t.siteId&&!ids.has(t.siteId))throw Error('作业关联的网站不存在');
+ }return s;
+}
+function validateEnvelope(v){
+ if(v?.format!=='study-desk-vault'||v.version!==1||v.kdf!=='PBKDF2-SHA256'||v.iterations!==ITERATIONS||typeof v.ciphertext!=='string'||unb64(v.ciphertext).length<16||unb64(v.salt).length!==16||unb64(v.iv).length!==12)throw Error('不是有效的加密备份');return v;
+}
+async function decryptVault(v,pass){
+ validateEnvelope(v);const k=await derive(pass,unb64(v.salt));
+ const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(v.iv)},k,unb64(v.ciphertext));
+ return {key:k,data:validateState(StudyDeskCore.migrateState(JSON.parse(new TextDecoder().decode(plain))))};
+}
+function persist(){
+ if(!unlocked||saving) return Promise.reject(Error('请等待当前保存完成'));
+ const snapshot=structuredClone(data),k=key,salt=envelope.salt,expected=storedVersion;
+ saving=true;$('#saveState').textContent='正在保存…';
+ const job=saveQueue.catch(()=>{}).then(async()=>{
+  try{
+   validateState(snapshot);const next=k?await encryptState(snapshot,k,salt):{format:'study-desk-plain',version:1,data:snapshot};
+   const current=localStorage.getItem(STORAGE_KEY);
+   if(current!==expected)throw Error('资料库已在其他窗口更新，请锁定并重新解锁');
+   const raw=JSON.stringify(next);localStorage.setItem(STORAGE_KEY,raw);storedVersion=raw;envelope=next;committed=structuredClone(snapshot);queueReminder(snapshot);
+   $('#saveState').textContent=k?'已加密保存到本地':'未开启保护 · 明文保存到本地';
+  }catch(err){data=structuredClone(committed);render();$('#saveState').textContent='保存失败，请重试或导出备份';throw err;}
+  finally{saving=false;}
+ });saveQueue=job;return job;
+}
 function toast(s){$('#toast').textContent=s;$('#toast').style.display='block';clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').style.display='none',3500);}
-function showVault(){document.body.classList.add('locked');const existing=localStorage.getItem(STORAGE_KEY);$('#vaultTitle').textContent=existing?'解锁你的资料库':'创建本地资料库';$('#vaultDesc').textContent=existing?'输入主密码，查看网站和作业。':'设置至少 10 位主密码，网站与登录信息会加密后保存。';$('#confirmLabel').hidden=!!existing;$('#confirmPassword').required=!existing;$('#masterPassword').minLength=existing?1:10;$('#vaultError').textContent='';$('#vaultForm').reset();if(!$('#vaultDialog').open)$('#vaultDialog').showModal();}
-async function lock(){await saveQueue.catch(()=>{});clearTimeout(idleTimer);key=null;data=empty();for(const d of document.querySelectorAll('dialog[open]'))d.close();$('#siteForm').reset();$('#taskForm').reset();$('#readerText').value='';$('#readerResults').innerHTML='';candidates=[];render();showVault();}
+function protectionView(){
+ const protectedMode=!!key;$('#quickLockBtn').hidden=!protectedMode;$('#lockBtn').hidden=!protectedMode;
+ $('#exportBtn').textContent=protectedMode?'导出加密备份':'导出明文备份';
+ $('#saveState').textContent=protectedMode?'已加密保存到本地':'未开启保护 · 明文保存到本地';
+}
+function openPlain(v,raw){
+ if(v?.format!=='study-desk-plain'||v.version!==1)throw Error('明文备份版本不受支持');
+ data=validateState(StudyDeskCore.migrateState(v.data));key=null;envelope=v;storedVersion=raw;committed=structuredClone(data);unlocked=true;
+ if($('#vaultDialog').open)$('#vaultDialog').close();document.body.classList.remove('locked');render();protectionView();
+}
+function showVault(){
+ document.body.classList.add('locked');const raw=localStorage.getItem(STORAGE_KEY);storedVersion=raw;
+ $('#vaultForm').reset();$('#vaultError').textContent='';
+ if(raw){try{const v=JSON.parse(raw);if(v.format==='study-desk-plain'){openPlain(v,raw);return;}}catch(err){$('#vaultError').textContent='资料库读取失败：'+err.message;}}
+ $('#vaultTitle').textContent=raw?'解锁你的资料库':'创建本地资料库';
+ $('#vaultDesc').textContent=raw?'输入主密码，查看网站和作业。':'可设置主密码加密，或不开启密码直接使用。';
+ $('#confirmLabel').hidden=!!raw;$('#confirmPassword').required=!raw;$('#masterPassword').minLength=raw?1:10;
+ $('#skipProtectionBtn').hidden=!!raw;if(!$('#vaultDialog').open)$('#vaultDialog').showModal();
+}
+async function prepareBackup(v,pass=''){
+ if(v?.format==='study-desk-plain'){
+  if(v.version!==1)throw Error('明文备份版本不受支持');
+  return {data:validateState(StudyDeskCore.migrateState(v.data)),key:null,envelope:v};
+ }
+ const restored=await decryptVault(v,pass);return {...restored,envelope:v};
+}
+async function lock(){await saveQueue.catch(()=>{});clearTimeout(idleTimer);key=null;unlocked=false;data=empty();committed=empty();pendingRestore=null;radarPreview=null;$('#radarMergeForm').reset();$('#radarMergeInfo').textContent='';$('#radarMergeError').textContent='';$('#restoreForm').reset();$('#protectionForm').reset();for(const d of document.querySelectorAll('dialog[open]'))d.close();$('#siteForm').reset();$('#taskForm').reset();$('#search').value='';$('#categoryFilter').value='';$('#statusFilter').value='open';$('#dueFilter').value='';siteSelect($('#taskSiteSelect'));siteSelect($('#readerSite'));$('#restoreInfo').textContent='';clearTimeout(toast.timer);$('#toast').textContent='';$('#toast').style.display='none';$('#readerText').value='';$('#readerCourse').value='';$('#readerResults').innerHTML='';candidates=[];render();showVault();if(DEMO_MODE){$('#modeNote').textContent='独立演示模式 · 与正式资料库分开保存';document.title='课桌 · 独立演示';}}
 function touch(){clearTimeout(idleTimer);if(key)idleTimer=setTimeout(()=>lock(),10*60*1000);}
 $('#vaultDialog').addEventListener('cancel',e=>e.preventDefault());
-$('#vaultForm').addEventListener('submit',async e=>{e.preventDefault();const btn=$('#unlockBtn');btn.disabled=true;try{if(!crypto.subtle)throw Error('浏览器不支持本地加密，请用新版 Chrome 或 Edge 打开');const pass=$('#masterPassword').value,raw=localStorage.getItem(STORAGE_KEY);if(raw){envelope=validateEnvelope(JSON.parse(raw));key=await derive(pass,unb64(envelope.salt));const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(envelope.iv)},key,unb64(envelope.ciphertext));data=validateState(JSON.parse(new TextDecoder().decode(plain)));}else{if(pass!==$('#confirmPassword').value)throw Error('两次密码不一致');const salt=crypto.getRandomValues(new Uint8Array(16));key=await derive(pass,salt);envelope={salt:b64(salt)};data=empty();await persist();}$('#vaultForm').reset();$('#vaultDialog').close();document.body.classList.remove('locked');render();touch();}catch(err){key=null;$('#vaultError').textContent=err.name==='OperationError'?'主密码不正确，或备份已损坏。':err.message;}finally{btn.disabled=false;}});
+$('#vaultForm').addEventListener('submit',async e=>{
+ e.preventDefault();const btn=$('#unlockBtn');btn.disabled=true;
+ try{
+  if(!crypto.subtle)throw Error('浏览器不支持本地加密，请用新版 Chrome 或 Edge');
+  const pass=$('#masterPassword').value,raw=localStorage.getItem(STORAGE_KEY);
+  if(raw){const restored=await prepareBackup(JSON.parse(raw),pass);envelope=restored.envelope;key=restored.key;data=restored.data;storedVersion=raw;committed=structuredClone(data);unlocked=true;}
+  else{
+   if(pass!==$('#confirmPassword').value)throw Error('两次密码不一致');
+   const salt=crypto.getRandomValues(new Uint8Array(16));key=await derive(pass,salt);envelope={salt:b64(salt)};data=empty();unlocked=true;await persist();
+  }
+  $('#vaultForm').reset();$('#vaultDialog').close();document.body.classList.remove('locked');render();protectionView();touch();
+ }catch(err){key=null;unlocked=false;data=empty();committed=empty();$('#vaultError').textContent=err.name==='OperationError'?'主密码不正确，或备份已损坏。':err.message;}
+ finally{btn.disabled=false;}
+});
+$('#skipProtectionBtn').onclick=async()=>{
+ const btn=$('#skipProtectionBtn');btn.disabled=true;
+ try{
+  if(localStorage.getItem(STORAGE_KEY))throw Error('已有资料库，请解锁或恢复备份');
+  data=empty();envelope={format:'study-desk-plain',version:1,data};key=null;unlocked=true;await persist();
+  $('#vaultForm').reset();$('#vaultDialog').close();document.body.classList.remove('locked');render();protectionView();
+ }catch(err){unlocked=false;$('#vaultError').textContent=err.message;}finally{btn.disabled=false;}
+};
 function siteSelect(el,selected=''){el.innerHTML='<option value="">未关联网站</option>'+data.sites.map(s=>`<option value="${esc(s.id)}">${esc(s.name)}</option>`).join('');el.value=selected;}
 function openSite(id){const s=data.sites.find(s=>s.id===id);$('#siteForm').reset();$('#siteDialogTitle').textContent=s?'编辑网站':'添加网站';if(s)for(const [k,v]of Object.entries(s)){const el=$('#siteForm').elements.namedItem(k);if(el)el.value=v??'';}$('#siteDialog').showModal();}
 function openTask(id,siteId=''){const t=data.tasks.find(t=>t.id===id);$('#taskForm').reset();siteSelect($('#taskSiteSelect'),t?.siteId||siteId);$('#taskDialogTitle').textContent=t?'编辑作业':'添加作业';if(t)for(const[k,v]of Object.entries(t)){const el=$('#taskForm').elements.namedItem(k);if(el)el.value=k==='due'&&v?localDate(v):v??'';}$('#taskDialog').showModal();}
 function dateLabel(t){if(!t.due)return '<span>未设置截止日期</span>';const d=new Date(t.due),late=t.status!=='done'&&d<Date.now();return `<span class="due ${late?'overdue':''}">${late?'已逾期 · ':''}${esc(d.toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}))}</span>`;}
-function render(){const q=$('#search').value.trim().toLowerCase(),category=$('#categoryFilter').value,status=$('#statusFilter').value,now=Date.now();const open=data.tasks.filter(t=>t.status==='open'),soon=open.filter(t=>t.due&&new Date(t.due)>=now&&new Date(t.due)-now<=72*3600000),late=open.filter(t=>t.due&&new Date(t.due)<now);$('#stats').innerHTML=[['网站',data.sites.length],['待完成',open.length],['三天内截止',soon.length],['已逾期',late.length]].map(([l,n],i)=>`<div class="stat ${i===3&&n?'urgent':''}"><strong>${n}</strong><span>${l}</span></div>`).join('');const sites=data.sites.filter(s=>(!category||s.category===category)&&[s.name,s.purpose,s.account,s.notes].join(' ').toLowerCase().includes(q));const tasks=data.tasks.filter(t=>{const s=data.sites.find(s=>s.id===t.siteId);return(status==='all'||t.status===status)&&(!category||s?.category===category)&&[t.title,t.course,t.notes,s?.name].join(' ').toLowerCase().includes(q);}).sort((a,b)=>(a.due?new Date(a.due).getTime():Infinity)-(b.due?new Date(b.due).getTime():Infinity));$('#taskCount').textContent=`· ${tasks.length}`;$('#siteCount').textContent=`· ${sites.length}`;$('#taskList').innerHTML=tasks.length?tasks.map(t=>{const s=data.sites.find(s=>s.id===t.siteId),url=t.url||s?.assignmentUrl||s?.url;return `<article class="task ${t.status==='done'?'done':''}"><button class="check" data-action="toggle" data-id="${esc(t.id)}" aria-label="${t.status==='done'?'标记未完成':'标记已完成'}">${t.status==='done'?'✓':''}</button><div class="task-body"><h3>${esc(t.title)}</h3><div class="meta">${dateLabel(t)}<span>${esc(t.course||'未设置课程')}</span><span>${esc(s?.name||'未关联网站')}</span>${t.source==='text'?'<span class="pill">文本导入</span>':''}</div>${t.notes?`<div class="task-notes">${esc(t.notes)}</div>`:''}</div><div class="mini-actions">${url?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">打开作业</a>`:''}<button data-action="editTask" data-id="${esc(t.id)}">编辑</button><button data-action="deleteTask" data-id="${esc(t.id)}">删除</button></div></article>`;}).join(''):'<div class="empty">这里暂时没有符合条件的作业。<br><button data-action="newTask">添加第一份作业</button></div>';$('#siteList').innerHTML=sites.length?sites.map(s=>`<article class="site"><div class="site-top"><span class="site-icon">${esc(s.name.slice(0,1))}</span><div><h3>${esc(s.name)}</h3><div class="site-domain">${esc(new URL(s.url).hostname)}</div></div></div><div class="site-purpose">${esc(s.purpose||'点击编辑，记录这个网站的用途')}</div><div><span class="pill">${esc(s.category)}</span> <span class="muted">${data.tasks.filter(t=>t.siteId===s.id&&t.status==='open').length} 份待完成作业</span></div><div class="account">账号：${esc(s.account||'未填写')}<br><span class="muted">密码：${s.password?'已加密保存':'未保存'}</span></div><div class="mini-actions"><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">打开网站</a><button data-action="newSiteTask" data-id="${esc(s.id)}">加作业</button><button data-action="editSite" data-id="${esc(s.id)}">编辑</button>${s.account?`<button data-action="copyAccount" data-id="${esc(s.id)}">复制账号</button>`:''}${s.password?`<button data-action="copyPassword" data-id="${esc(s.id)}">复制密码</button>`:''}<button data-action="deleteSite" data-id="${esc(s.id)}">删除</button></div></article>`).join(''):'<div class="empty">把常用网站集中到这里。<br><button data-action="newSite">添加第一个网站</button></div>';$('#taskSection').hidden=view==='sites';$('#siteSection').hidden=view==='tasks';$('#viewTitle').textContent={overview:'今天先做什么？',sites:'常用网站，一处找到',tasks:'把作业安排清楚'}[view];}
+function taskCard(t){
+ const site=data.sites.find(s=>s.id===t.siteId),link=t.url||site?.assignmentUrl||site?.url;
+ return `<article class="task ${t.status==='done'?'done':''}"><button class="check" data-action="toggle" data-id="${esc(t.id)}" aria-label="${t.status==='done'?'标记未完成':'标记已完成'}">${t.status==='done'?'✓':''}</button><div class="task-body"><h3>${esc(t.title)}</h3><div class="meta">${dateLabel(t)}<span>${esc(t.course||'未设置课程')}</span><span>${esc(site?.name||'未关联网站')}</span>${t.status==='doing'?'<span class="pill">进行中</span>':''}${t.est?`<span>预计 ${esc(t.est)} 分钟</span>`:''}${['text','radar'].includes(t.source)?`<span class="pill">${t.source==='radar'?'旧版迁移':'文本导入'}</span>`:''}</div>${t.notes?`<div class="task-notes">${esc(t.notes)}</div>`:''}</div><div class="mini-actions">${link?`<a href="${esc(link)}" target="_blank" rel="noopener noreferrer">打开作业</a>`:''}<button data-action="editTask" data-id="${esc(t.id)}">编辑</button><button data-action="deleteTask" data-id="${esc(t.id)}">删除</button></div></article>`;
+}
+function render(){
+ const q=$('#search').value.trim().toLowerCase(),category=$('#categoryFilter').value,status=$('#statusFilter').value,dueGroup=$('#dueFilter').value,now=new Date();
+ const open=data.tasks.filter(t=>t.status!=='done'),soon=open.filter(t=>['today','tomorrow','soon'].includes(StudyDeskRadar.groupOf(t,now))),late=open.filter(t=>StudyDeskRadar.groupOf(t,now)==='late');
+ $('#stats').innerHTML=[['平台 / 网站',data.sites.length],['未完成',open.length],['三天内截止',soon.length],['已逾期',late.length]].map(([l,n],i)=>`<div class="stat ${i===3&&n?'urgent':''}"><strong>${n}</strong><span>${l}</span></div>`).join('');
+ const sites=data.sites.filter(s=>(!category||s.category===category)&&[s.name,s.purpose,s.loginHint,s.notes].join(' ').toLowerCase().includes(q));
+ const tasks=data.tasks.filter(t=>{const site=data.sites.find(s=>s.id===t.siteId);return(status==='all'||(status==='open'?t.status!=='done':t.status===status))&&(!category||site?.category===category)&&(!dueGroup||(dueGroup==='soon'?['today','tomorrow','soon'].includes(StudyDeskRadar.groupOf(t,now)):dueGroup==='week'?['today','tomorrow','soon','week'].includes(StudyDeskRadar.groupOf(t,now)):StudyDeskRadar.groupOf(t,now)===dueGroup))&&[t.title,t.course,t.notes,site?.name].join(' ').toLowerCase().includes(q);}).sort((a,b)=>(a.due?new Date(a.due).getTime():Infinity)-(b.due?new Date(b.due).getTime():Infinity));
+ $('#taskCount').textContent=`· ${tasks.length}`;$('#siteCount').textContent=`· ${sites.length}`;
+ $('#taskList').innerHTML=tasks.length?StudyDeskRadar.groups.map(([group,label])=>{const rows=tasks.filter(t=>StudyDeskRadar.groupOf(t,now)===group);return rows.length?`<h3 class="task-group">${label} <span>${rows.length}</span></h3>`+rows.map(taskCard).join(''):'';}).join(''):'<div class="empty">这里暂时没有符合条件的作业。<br><button data-action="newTask">添加第一份作业</button></div>';
+ $('#siteList').innerHTML=sites.length?sites.map(s=>`<article class="site"><div class="site-top"><span class="site-icon">${esc(s.name.slice(0,1))}</span><div><h3>${esc(s.name)}</h3><div class="site-domain">${esc(s.url?new URL(s.url).hostname:'群聊 / 手动入口')}</div></div></div><div class="site-purpose">${esc(s.purpose||'点击编辑，记录用途')}</div><div><span class="pill">${esc(s.category||'课程')}</span> <span class="muted">${data.tasks.filter(t=>t.siteId===s.id&&t.status!=='done').length} 份未完成作业</span></div>${s.loginHint?`<div class="muted">登录方式：${esc(s.loginHint)}</div>`:''}<div class="mini-actions">${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">打开网站</a>`:''}<button data-action="newSiteTask" data-id="${esc(s.id)}">加作业</button><button data-action="editSite" data-id="${esc(s.id)}">编辑</button><button data-action="deleteSite" data-id="${esc(s.id)}">删除</button></div></article>`).join(''):'<div class="empty">把常用平台集中到这里。<br><button data-action="newSite">添加第一个网站</button></div>';
+ $('#suggestionSection').hidden=view!=='overview';$('#suggestionList').innerHTML=StudyDeskCore.suggestions(data.tasks).map(t=>`<button class="suggestion" data-action="editTask" data-id="${esc(t.id)}"><strong>${esc(t.title)}</strong>${dateLabel(t)}</button>`).join('')||'<p class="muted">没有待完成作业，可以添加一份或从旧版迁移。</p>';$('#taskSection').hidden=view==='sites';$('#siteSection').hidden=view==='tasks';$('#viewTitle').textContent={overview:'今天先做什么？',sites:'常用平台，一处找到',tasks:'把作业安排清楚'}[view];
+}
 async function copy(v){try{await navigator.clipboard.writeText(v);toast('已复制');}catch{toast('浏览器禁止复制，请在编辑窗口中手动复制。');}}
-document.addEventListener('click',async e=>{touch();const b=e.target.closest('button');if(!b)return;if(b.dataset.close){$('#'+b.dataset.close).close();return;}if(b.dataset.view){view=b.dataset.view;document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));render();return;}const a=b.dataset.action,id=b.dataset.id;if(!a||!key)return;try{if(a==='newSite')openSite();if(a==='newTask')openTask();if(a==='editSite')openSite(id);if(a==='editTask')openTask(id);if(a==='newSiteTask')openTask(null,id);if(a==='copyAccount')await copy(data.sites.find(s=>s.id===id).account);if(a==='copyPassword')await copy(data.sites.find(s=>s.id===id).password);if(a==='toggle'){const t=data.tasks.find(t=>t.id===id);t.status=t.status==='open'?'done':'open';await persist();render();}if(a==='deleteTask'&&confirm('删除这份作业？')){data.tasks=data.tasks.filter(t=>t.id!==id);await persist();render();}if(a==='deleteSite'&&confirm('删除网站？关联作业会保留，但取消网站关联。')){data.sites=data.sites.filter(s=>s.id!==id);data.tasks.forEach(t=>{if(t.siteId===id)t.siteId='';});await persist();render();}}catch(err){toast('操作未保存：'+err.message);}});
-$('#siteForm').addEventListener('submit',async e=>{e.preventDefault();try{const values=Object.fromEntries(new FormData(e.target));values.url=safeUrl(values.url);values.assignmentUrl=safeUrl(values.assignmentUrl);if(!values.name.trim())throw Error('请输入网站名称');const existing=data.sites.find(s=>s.id===values.id);values.id=values.id||uid();values.integration=existing?.integration||{mode:'manual',adapterId:null,lastSyncAt:null};const i=data.sites.findIndex(s=>s.id===values.id);if(i<0)data.sites.push(values);else data.sites[i]=values;await persist();$('#siteDialog').close();e.target.reset();render();toast('网站已保存');}catch(err){toast(err.message);}});
-$('#taskForm').addEventListener('submit',async e=>{e.preventDefault();try{const values=Object.fromEntries(new FormData(e.target));values.url=safeUrl(values.url);values.due=values.due?new Date(values.due).toISOString():'';const old=data.tasks.find(t=>t.id===values.id);values.id=values.id||uid();values.source=old?.source||'manual';values.externalId=old?.externalId||null;const i=data.tasks.findIndex(t=>t.id===values.id);if(i<0)data.tasks.push(values);else data.tasks[i]=values;await persist();$('#taskDialog').close();e.target.reset();render();toast('作业已保存');}catch(err){toast(err.message);}});
-$('#addSiteBtn').onclick=()=>openSite();$('#addTaskBtn').onclick=()=>openTask();$('#lockBtn').onclick=lock;['search','categoryFilter','statusFilter'].forEach(id=>$('#'+id).addEventListener('input',render));
-$('#exportBtn').onclick=async()=>{try{await saveQueue;const blob=new Blob([JSON.stringify(envelope,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`课桌-加密备份-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已导出加密备份，恢复时仍需主密码');}catch(err){toast(err.message);}};
-$('#importBtn').onclick=()=>$('#backupInput').click();$('#backupInput').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>10*1024*1024)throw Error('备份文件过大');const imported=validateEnvelope(JSON.parse(await f.text()));if(!confirm('导入会替换当前资料库。请先导出当前备份；导入后需使用该备份的主密码。'))return;await saveQueue.catch(()=>{});localStorage.setItem(STORAGE_KEY,JSON.stringify(imported));await lock();toast('备份已导入，请用原主密码解锁');}catch(err){toast('导入失败：'+err.message);}finally{e.target.value='';}};
-$('#demoBtn').onclick=async()=>{if(data.sites.some(s=>s.demo)){toast('示例已存在');return;}const sid=uid();data.sites.push({id:sid,name:'示例课程平台',url:'https://example.com/',assignmentUrl:'',category:'课程',purpose:'示例：看课件与提交作业',account:'示例学号',password:'',notes:'请替换成你实际使用的网站。',demo:true,integration:{mode:'manual',adapterId:null,lastSyncAt:null}});data.tasks.push({id:uid(),siteId:sid,title:'示例：完成运动学练习',course:'大学物理',due:new Date(Date.now()+48*3600000).toISOString(),status:'open',url:'',notes:'这是一条示例任务，可以编辑或删除。',source:'manual',externalId:null});try{await persist();render();toast('示例已添加');}catch(err){toast(err.message);}};
+document.addEventListener('click',async e=>{touch();const b=e.target.closest('button');if(!b)return;if(b.dataset.close){$('#'+b.dataset.close).close();return;}if(b.dataset.view){view=b.dataset.view;document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));render();return;}const a=b.dataset.action,id=b.dataset.id;if(!a||!unlocked)return;if(saving){toast('请等待保存完成');return;}try{if(a==='newSite')openSite();if(a==='newTask')openTask();if(a==='editSite')openSite(id);if(a==='editTask')openTask(id);if(a==='newSiteTask')openTask(null,id);if(a==='toggle'){const t=data.tasks.find(t=>t.id===id);t.status=t.status==='open'?'done':'open';await persist();render();}if(a==='deleteTask'&&confirm('删除这份作业？')){data.tasks=data.tasks.filter(t=>t.id!==id);await persist();render();}if(a==='deleteSite'&&confirm('删除网站？关联作业会保留，但取消网站关联。')){data.sites=data.sites.filter(s=>s.id!==id);data.tasks.forEach(t=>{if(t.siteId===id)t.siteId='';});await persist();render();}}catch(err){toast('操作未保存：'+err.message);}});
+$('#siteForm').addEventListener('submit',async e=>{e.preventDefault();if(saving){toast('请等待保存完成');return;}try{const values=Object.fromEntries(new FormData(e.target));values.name=values.name.trim();values.url=safeUrl(values.url);values.assignmentUrl=safeUrl(values.assignmentUrl);if(!values.name.trim())throw Error('请输入网站名称');const existing=data.sites.find(s=>s.id===values.id);if(!existing){values.account='';values.password='';}values.id=values.id||uid();values.integration=existing?.integration||{mode:'manual',adapterId:null,lastSyncAt:null};const i=data.sites.findIndex(s=>s.id===values.id);if(i<0)data.sites.push(values);else data.sites[i]={...existing,...values};await persist();$('#siteDialog').close();e.target.reset();render();toast('网站已保存');}catch(err){toast(err.message);}});
+$('#taskForm').addEventListener('submit',async e=>{e.preventDefault();if(saving){toast('请等待保存完成');return;}try{const values=Object.fromEntries(new FormData(e.target));values.est=values.est===''?'':Number(values.est);values.title=values.title.trim();if(!values.title)throw Error('请输入作业名称');values.url=safeUrl(values.url);values.due=values.due?new Date(values.due).toISOString():'';const old=data.tasks.find(t=>t.id===values.id);values.id=values.id||uid();values.source=old?.source||'manual';values.externalId=old?.externalId||null;const i=data.tasks.findIndex(t=>t.id===values.id);if(i<0)data.tasks.push(values);else data.tasks[i]={...old,...values};await persist();$('#taskDialog').close();e.target.reset();render();toast('作业已保存');}catch(err){toast(err.message);}});
+$('#addSiteBtn').onclick=()=>openSite();$('#addTaskBtn').onclick=()=>openTask();$('#lockBtn').onclick=lock;$('#quickLockBtn').onclick=lock;['search','categoryFilter','statusFilter','dueFilter'].forEach(id=>$('#'+id).addEventListener('input',render));
+function downloadBackup(v,label=v.format==='study-desk-plain'?'明文备份':'加密备份'){
+ const blob=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=`课桌-${label}-${localDate(new Date()).replace(/[:T]/g,'-')}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+$('#exportBtn').onclick=async()=>{try{await saveQueue;downloadBackup(envelope);toast(key?'已导出加密备份，恢复时仍需主密码':'已导出明文备份，请妥善保管');}catch(err){toast(err.message);}};
+$('#importBtn').onclick=()=>$('#backupInput').click();$('#recoverVaultBtn').onclick=()=>$('#backupInput').click();
+$('#backupInput').onchange=async e=>{
+ const f=e.target.files[0];if(!f)return;
+ try{
+  if(f.size>10*1024*1024)throw Error('备份文件过大');
+  const parsed=JSON.parse(await f.text());if(parsed?.format==='study-desk-plain'){if(parsed.version!==1)throw Error('备份版本不受支持');validateState(StudyDeskCore.migrateState(parsed.data));pendingRestore=parsed;}else pendingRestore=validateEnvelope(parsed);$('#restoreForm').reset();$('#restoreError').textContent='';
+  $('#restorePasswordLabel').hidden=pendingRestore.format==='study-desk-plain';$('#restorePassword').required=pendingRestore.format!=='study-desk-plain';$('#restoreInfo').textContent='已选择：'+f.name+(pendingRestore.format==='study-desk-plain'?'（明文备份，不需要密码）':'。请输入这份备份的主密码。');$('#restoreDialog').showModal();
+ }catch(err){pendingRestore=null;toast('导入失败：'+err.message);}finally{e.target.value='';}
+};
+$('#restoreDialog').addEventListener('close',()=>{pendingRestore=null;radarPreview=null;$('#radarMergeForm').reset();$('#radarMergeInfo').textContent='';$('#radarMergeError').textContent='';$('#restoreForm').reset();});
+$('#restoreForm').onsubmit=async e=>{
+ e.preventDefault();const btn=$('#restoreBtn');btn.disabled=true;
+ try{
+  const imported=pendingRestore,restored=await prepareBackup(imported,$('#restorePassword').value);
+  if(!confirm(`验证成功：${restored.data.sites.length} 个网站、${restored.data.tasks.length} 份作业。确认替换当前资料库？`))return;
+  await saveQueue.catch(()=>{});
+  const current=localStorage.getItem(STORAGE_KEY);
+  if(current)downloadBackup(JSON.parse(current),'恢复前备份');
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(imported));await lock();toast(imported.format==='study-desk-plain'?'明文备份已恢复':'备份已恢复，请用原主密码解锁');
+ }catch(err){$('#restoreError').textContent=err.name==='OperationError'?'密码不正确或备份已损坏，当前资料库未替换。':err.message;}
+ finally{btn.disabled=false;}
+};
+$('#demoBtn').onclick=async()=>{if(!unlocked||saving)return;if(data.sites.some(s=>s.demo)){toast('示例已存在');return;}const sid=uid();data.sites.push({id:sid,name:'示例课程平台',url:'https://example.com/',assignmentUrl:'',category:'课程',purpose:'示例：看课件与提交作业',account:'',password:'',notes:'请替换成你实际使用的网站。',demo:true,integration:{mode:'manual',adapterId:null,lastSyncAt:null}});data.tasks.push({id:uid(),siteId:sid,title:'示例：完成运动学练习',course:'大学物理',due:new Date(Date.now()+48*3600000).toISOString(),status:'open',url:'',notes:'这是一条示例任务，可以编辑或删除。',source:'manual',externalId:null});try{await persist();render();toast('示例已添加');}catch(err){toast(err.message);}};
 // Adapter boundary: parsing stays separate from persistence; candidates always require user confirmation.
 function parseTaskText(text){return text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).slice(0,100).map(line=>{const m=line.match(/(20\d{2})[-年/.](\d{1,2})[-月/.](\d{1,2})日?(?:\s*(\d{1,2}):(\d{2}))?/);let due='';if(m){const y=+m[1],month=+m[2],day=+m[3],h=m[4]===undefined?23:+m[4],min=m[5]===undefined?59:+m[5],d=new Date(y,month-1,day,h,min);if(d.getFullYear()===y&&d.getMonth()===month-1&&d.getDate()===day&&h<24&&min<60)due=localDate(d);}return {title:line,due};});}
-$('#readTasksBtn').onclick=()=>{siteSelect($('#readerSite'));$('#readerText').value='';$('#readerResults').innerHTML='';candidates=[];$('#readerDialog').showModal();};
-$('#readerForm').onsubmit=e=>{e.preventDefault();candidates=parseTaskText($('#readerText').value);$('#readerResults').innerHTML=candidates.map((t,i)=>`<div class="candidate"><label><input type="checkbox" data-candidate="${i}" checked><span>${esc(t.title)}</span></label><input type="datetime-local" aria-label="候选作业截止时间" data-due="${i}" value="${esc(t.due)}"></div>`).join('')+(candidates.length?'<button type="button" class="primary" id="confirmCandidates" style="margin-top:16px">确认并加入清单</button>':'<p class="muted">先粘贴网页上的作业文字。</p>');};
-$('#readerResults').onclick=async e=>{if(e.target.id!=='confirmCandidates')return;try{const selected=[...document.querySelectorAll('[data-candidate]:checked')];if(!selected.length){toast('请选择至少一份作业');return;}for(const input of selected){const i=+input.dataset.candidate,due=document.querySelector(`[data-due="${i}"]`).value;data.tasks.push({id:uid(),siteId:$('#readerSite').value,title:candidates[i].title,course:'',due:due?new Date(due).toISOString():'',status:'open',url:'',notes:'',source:'text',externalId:null});}await persist();$('#readerDialog').close();$('#readerResults').innerHTML='';$('#readerText').value='';candidates=[];render();toast(`已导入 ${selected.length} 份作业`);}catch(err){toast(err.message);}};
+$('#readTasksBtn').onclick=()=>{siteSelect($('#readerSite'));$('#readerText').value='';$('#readerCourse').value='';$('#readerResults').innerHTML='';candidates=[];$('#readerDialog').showModal();};
+$('#readerSite').onchange=()=>{candidates=[];$('#readerResults').innerHTML='';};
+$('#readerForm').onsubmit=e=>{e.preventDefault();try{const parsed=StudyDeskRadar.parseQuick($('#readerText').value,data.sites);const marked=StudyDeskCore.previewCandidates(data.tasks,parsed.map(t=>({...t,siteId:t.siteId||$('#readerSite').value,due:t.due?new Date(t.due).toISOString():''})));candidates=parsed.map((t,i)=>({...t,duplicate:marked[i].duplicate,possibleDuplicate:marked[i].possibleDuplicate}));}catch(err){toast(err.message);return;}$('#readerResults').innerHTML=candidates.map((t,i)=>`<div class="candidate"><label><input type="checkbox" data-candidate="${i}" ${t.duplicate?'':'checked'}><span>${esc(t.title)}${t.duplicate?'<small class="error">重复（默认不选）</small>':t.possibleDuplicate?'<small class="error">可能重复，请核对</small>':''}${t.warning?`<small class="error"> · ${esc(t.warning)}</small>`:''}${t.siteId?`<small> · ${esc(data.sites.find(s=>s.id===t.siteId)?.name)}</small>`:''}</span></label><input type="datetime-local" aria-label="候选作业截止时间" data-due="${i}" value="${esc(t.due)}"></div>`).join('')+(candidates.length?'<button type="button" class="primary" id="confirmCandidates" style="margin-top:16px">确认并加入清单</button>':'<p class="muted">先粘贴网页上的作业文字。</p>');};
+function taskFingerprint(t){return JSON.stringify([t.siteId||'',t.title.trim().replace(/\s+/g,' '),t.due?new Date(t.due).toISOString():'']);}
+function mergeCandidates(tasks,incoming){return StudyDeskCore.mergeTasks(tasks,incoming);}
+$('#readerResults').onclick=async e=>{
+ if(e.target.id!=='confirmCandidates'||saving||!unlocked)return;
+ try{
+  const selected=[...document.querySelectorAll('[data-candidate]:checked')];if(!selected.length){toast('请选择至少一份作业');return;}
+  const incoming=selected.map(input=>{const i=+input.dataset.candidate,due=document.querySelector(`[data-due="${i}"]`).value;return {id:uid(),siteId:candidates[i].siteId||$('#readerSite').value,title:candidates[i].title,course:$('#readerCourse').value.trim(),due:due?new Date(due).toISOString():'',status:'open',url:candidates[i].url||'',notes:candidates[i].notes||'',source:'text',externalId:null};});
+  const result=mergeCandidates(data.tasks,incoming);data.tasks.push(...result.added);
+  if(result.added.length)await persist();$('#readerDialog').close();$('#readerResults').innerHTML='';$('#readerText').value='';candidates=[];render();toast(`已导入 ${result.added.length} 份作业，跳过 ${result.skipped} 份重复作业`);
+ }catch(err){toast(err.message);}
+};
+window.addEventListener('storage',e=>{if(e.key===STORAGE_KEY&&unlocked){lock().then(()=>toast('资料库在其他窗口发生变化，请重新解锁'));}});
 // Extension registration for a later localhost service or browser extension. No credentials enter this API.
 window.StudyDeskAdapters={version:1,registry:new Map(),register(id,adapter){if(typeof id!=='string'||typeof adapter?.readTasks!=='function')throw Error('适配器需要 readTasks 方法');this.registry.set(id,adapter);},parseTaskText};
+function protectionFields(){
+ const encrypted=$('#protectionMode').value==='encrypted';
+ $('#currentProtectionLabel').hidden=!key;$('#currentProtectionPassword').required=!!key;
+ for(const id of ['newProtectionLabel','newProtectionConfirmLabel'])$('#'+id).hidden=!encrypted;
+ $('#newProtectionPassword').required=encrypted;$('#newProtectionConfirm').required=encrypted;
+}
+$('#protectionBtn').onclick=()=>{
+ $('#protectionForm').reset();$('#protectionMode').value=key?'encrypted':'plain';
+ $('#protectionInfo').textContent=key?'当前使用主密码加密。可更换主密码，或关闭保护。':'当前未开启保护，数据以明文保存。开启加密会保留现有资料。';
+ $('#protectionError').textContent='';protectionFields();$('#protectionDialog').showModal();
+};
+$('#protectionMode').onchange=protectionFields;
+$('#protectionDialog').addEventListener('close',()=>$('#protectionForm').reset());
+$('#protectionForm').onsubmit=async e=>{
+ e.preventDefault();if(!unlocked||saving)return;const btn=$('#saveProtectionBtn');btn.disabled=true;
+ try{
+  await saveQueue;
+  if(key)await prepareBackup(envelope,$('#currentProtectionPassword').value);
+  const snapshot=validateState(StudyDeskCore.migrateState(data)),expected=storedVersion;
+  let next,nextKey=null;
+  if($('#protectionMode').value==='encrypted'){
+   const pass=$('#newProtectionPassword').value;if(pass.length<10)throw Error('主密码至少 10 位');
+   if(pass!==$('#newProtectionConfirm').value)throw Error('两次新密码不一致');
+   const salt=crypto.getRandomValues(new Uint8Array(16));nextKey=await derive(pass,salt);next=await encryptState(snapshot,nextKey,b64(salt));
+  }else{
+   if(key&&snapshot.sites.some(s=>s.password)&&!confirm('关闭保护后，已保存的网站密码也会变成明文。仍要关闭保护吗？'))return;
+   next={format:'study-desk-plain',version:1,data:snapshot};
+  }
+  if(localStorage.getItem(STORAGE_KEY)!==expected)throw Error('资料库已在其他窗口更新，请重新打开');
+  const raw=JSON.stringify(next);localStorage.setItem(STORAGE_KEY,raw);
+  storedVersion=raw;envelope=next;key=nextKey;data=snapshot;committed=structuredClone(snapshot);
+  clearTimeout(idleTimer);touch();protectionView();$('#protectionDialog').close();toast(nextKey?'已启用加密保护，资料保留':'已切换为明文保存，资料保留');
+ }catch(err){$('#protectionError').textContent=err.name==='OperationError'?'当前主密码不正确，保存方式未改变。':err.message;}
+ finally{btn.disabled=false;}
+};
+function downloadText(name,text,type){
+ const blob=new Blob([text],{type}),href=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=href;anchor.download=name;anchor.click();setTimeout(()=>URL.revokeObjectURL(href),1000);
+}
+function queueReminder(snapshot){
+ if(!reminderHandle)return;
+ const handle=reminderHandle,content=JSON.stringify(StudyDeskRadar.reminderData(snapshot),null,2);
+ reminderQueue=reminderQueue.catch(()=>{}).then(async()=>{
+  try{const stream=await handle.createWritable();await stream.write(content);await stream.close();$('#reminderState').textContent='提醒文件已更新';}
+  catch(err){$('#reminderState').textContent='提醒文件写入失败，请重新绑定；加密库已保存';reminderHandle=null;}
+ });
+}
+$('#briefBtn').onclick=()=>copy(StudyDeskRadar.brief(data));
+$('#icsBtn').onclick=()=>{
+ const calendar=StudyDeskRadar.calendar(data,true);if(!calendar.includes('BEGIN:VEVENT')){toast('没有设置截止时间的未完成作业');return;}
+ downloadText('作业提醒.ics',calendar,'text/calendar;charset=utf-8');toast('已导出未完成作业，带提前一天和两小时提醒；日历导入后才生效');
+};
+$('#reminderExportBtn').onclick=()=>{
+ downloadText('作业雷达提醒数据.json',JSON.stringify(StudyDeskRadar.reminderData(data),null,2),'application/json');toast('提醒数据为明文，不含网站账号和密码，请妥善保管');
+};
+$('#bindReminderBtn').onclick=async()=>{
+ try{
+  if(!window.showSaveFilePicker)throw Error('当前浏览器不支持绑定，请用导出提醒数据');
+  reminderHandle=await window.showSaveFilePicker({suggestedName:'作业雷达提醒数据.json',types:[{description:'JSON',accept:{'application/json':['.json']}}]});
+  queueReminder(data);await reminderQueue;toast('提醒文件仅含平台和作业信息，当前会话自动更新，重新打开需再次绑定');
+ }catch(err){if(err.name!=='AbortError')toast(err.message);}
+};
+$('#radarMergeBtn').onclick=()=>{
+ $('#radarMergeForm').reset();radarPreview=null;$('#radarMergeInfo').textContent='';$('#radarMergeError').textContent='';$('#radarCommitBtn').hidden=true;$('#radarMergeDialog').showModal();
+};
+$('#radarMergeDialog').addEventListener('close',()=>{radarPreview=null;$('#radarMergeForm').reset();});
+$('#radarJson').addEventListener('input',()=>{radarPreview=null;$('#radarCommitBtn').hidden=true;$('#radarMergeInfo').textContent='';});
+$('#radarFileBtn').onclick=()=>$('#radarInput').click();
+$('#radarInput').onchange=async e=>{
+ const file=e.target.files[0];if(!file)return;
+ try{if(file.size>10*1024*1024)throw Error('文件超过 10 MB');$('#radarJson').value=await file.text();radarPreview=null;$('#radarCommitBtn').hidden=true;$('#radarMergeInfo').textContent='已读取：'+file.name;}
+ catch(err){$('#radarMergeError').textContent=err.message;}finally{e.target.value='';}
+};
+$('#radarMergeForm').onsubmit=e=>{
+ e.preventDefault();radarPreview=null;$('#radarCommitBtn').hidden=true;$('#radarMergeError').textContent='';
+ try{
+  if(!unlocked||saving)throw Error('请先解锁并等待保存完成');
+  const raw=$('#radarJson').value;if(raw.length>10*1024*1024)throw Error('JSON 超过 10 MB');
+  radarPreview=StudyDeskRadar.mergeLegacy(data,JSON.parse(raw),uid);validateState(radarPreview.state);
+  $('#radarMergeInfo').textContent=`将追加 ${radarPreview.sitesAdded} 个平台、${radarPreview.tasksAdded} 份作业，跳过 ${radarPreview.skipped} 份重复作业。现有资料和完成状态保留。`;
+  $('#radarMergeInfo').textContent+='\n'+radarPreview.state.tasks.filter(t=>!data.tasks.some(old=>old.id===t.id)).map(t=>t.title+' · '+(t.due?new Date(t.due).toLocaleString('zh-CN'):'截止待核对')+' · '+(t.status==='doing'?'进行中':'待完成')+' · '+t.notes).join('\n');$('#radarCommitBtn').hidden=false;
+ }catch(err){$('#radarMergeError').textContent=err.message;}
+};
+$('#radarCommitBtn').onclick=async()=>{
+ if(!radarPreview||!unlocked||saving)return;const btn=$('#radarCommitBtn');btn.disabled=true;
+ try{const result=radarPreview;data=result.state;await persist();$('#radarMergeDialog').close();render();toast(`已追加 ${result.sitesAdded} 个平台、${result.tasksAdded} 份作业`);}
+ catch(err){$('#radarMergeError').textContent=err.message;}finally{btn.disabled=false;}
+};
+window.addEventListener('beforeunload',e=>{if(saving){e.preventDefault();e.returnValue='';}});
 ['pointerdown','keydown'].forEach(event=>document.addEventListener(event,touch));
-render();showVault();
+render();showVault();if(DEMO_MODE){$('#modeNote').textContent='独立演示模式 · 与正式资料库分开保存';document.title='课桌 · 独立演示';}
 
 // Optional agent tools expose task metadata only; credentials are never returned.
 if(document.modelContext?.registerTool){
  const lifecycle=new AbortController();
  const tools=[
-  {name:'read_tasks',description:'Read the unlocked homework list. Does not expose account credentials.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true,untrustedContentHint:true},execute(input){if(!key)throw Error('资料库已锁定');if(!input||Object.keys(input).length)throw Error('不接受参数');return {tasks:data.tasks.map(({id,title,course,due,status,siteId})=>({id,title,course,due,status,siteId}))};}},
-  {name:'start_task_creation',description:'Open the homework form; the user reviews and saves it.',inputSchema:{type:'object',properties:{},additionalProperties:false},execute(input){if(!key)throw Error('资料库已锁定');if(!input||Object.keys(input).length)throw Error('不接受参数');openTask();return {opened:true};}}
+  {name:'read_tasks',description:'Read the unlocked homework list. Does not expose account credentials.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true,untrustedContentHint:true},execute(input){if(!unlocked)throw Error('资料库已锁定');if(!input||Object.keys(input).length)throw Error('不接受参数');return {tasks:data.tasks.map(({id,title,course,due,status,siteId})=>({id,title,course,due,status,siteId}))};}},
+  {name:'start_task_creation',description:'Open the homework form; the user reviews and saves it.',inputSchema:{type:'object',properties:{},additionalProperties:false},execute(input){if(!unlocked)throw Error('资料库已锁定');if(!input||Object.keys(input).length)throw Error('不接受参数');openTask();return {opened:true};}}
  ];
  for(const tool of tools){try{Promise.resolve(document.modelContext.registerTool(tool,{signal:lifecycle.signal})).catch(()=>{});}catch{}}
  window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});
 }
+
+$('#ptaToolBtn').onclick=()=>{const code=StudyDeskPTA.bookmark();$('#ptaBookmark').href=code;$('#ptaBookmarkCode').value=code;$('#ptaToolDialog').showModal();};
+$('#copyPtaBookmark').onclick=()=>copy($('#ptaBookmarkCode').value);
 </script></body></html>

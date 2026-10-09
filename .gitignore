@@ -6,3 +6,7 @@ __pycache__/
 *.log
 *加密备份*.json
 *.enc.json
+.local/
+*恢复前备份*.json
+*雷达备份*.json
+作业雷达提醒数据.json
