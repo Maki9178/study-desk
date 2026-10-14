@@ -1,12 +1,13 @@
 {
   "name": "study-desk",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "description": "Local encrypted course website and homework manager",
   "scripts": {
     "start": "node server.cjs",
     "test": "node --check app.js && node tests/core.test.cjs && node tests/radar.test.cjs && node tests/logic.test.cjs && node tests/protection.test.cjs && node tests/server.test.cjs && node tests/pta.test.cjs && python build.py && node tests/ui.test.cjs",
-    "build": "python build.py"
+    "build": "python build.py",
+    "test:browser": "node tests/planning.browser.cjs"
   },
   "engines": {
     "node": ">=20"

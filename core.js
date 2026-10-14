@@ -31,6 +31,24 @@
   return tasks.slice().sort((a,b)=>priority(a,now)-priority(b,now)||((a.due?new Date(a.due).getTime():Infinity)-(b.due?new Date(b.due).getTime():Infinity))||normalized(a.title).localeCompare(normalized(b.title),'zh-CN'));
  }
  function suggestions(tasks,now=Date.now()){return sortTasks(tasks.filter(x=>x.status!=='done'),now).slice(0,3);}
- const api={migrateState,duplicateOf,previewCandidates,mergeTasks,priority,sortTasks,suggestions};
+ function dayKey(value){
+  const d=new Date(value);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+ }
+ function weekWorkload(tasks,now=new Date()){
+  const start=new Date(now);start.setHours(0,0,0,0);
+  const days=Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(d.getDate()+i);return {date:dayKey(d),count:0,minutes:0,unknown:0};});
+  const byDate=new Map(days.map(d=>[d.date,d]));let overdue=0,undated=0;
+  for(const t of tasks){
+   if(t.status==='done')continue;
+   if(!t.due){undated++;continue;}
+   const due=new Date(t.due);if(Number.isNaN(due.getTime()))continue;
+   if(due<start){overdue++;continue;}
+   const day=byDate.get(dayKey(due));if(!day)continue;
+   day.count++;const minutes=Number(t.est);
+   if(Number.isFinite(minutes)&&minutes>0)day.minutes+=minutes;else day.unknown++;
+  }
+  return {days,overdue,undated};
+ }
+ const api={migrateState,duplicateOf,previewCandidates,mergeTasks,priority,sortTasks,suggestions,dayKey,weekWorkload};
  root.StudyDeskCore=api;if(typeof module!=='undefined')module.exports=api;
 })(globalThis);

@@ -5,22 +5,28 @@ const vm=require('node:vm');
 const fs=require('node:fs');
 const path=require('node:path');
 const {webcrypto}=require('node:crypto');
-const nodes=new Map(),storage=new Map();
+const nodes=new Map(),storage=new Map(),events=new Map();
 const node=id=>{
  if(!nodes.has(id))nodes.set(id,{value:id==='#statusFilter'?'open':'',textContent:'',innerHTML:'',hidden:false,disabled:false,open:false,style:{},listeners:new Map(),classList:{add(){},remove(){},toggle(){}},addEventListener(name,callback){this.listeners.set(name,callback);},reset(){},showModal(){this.open=true;},close(){this.open=false;this.listeners.get('close')?.({});},click(){},elements:{namedItem(){return null;}}});return nodes.get(id);
 };
 const context=vm.createContext({
  crypto:webcrypto,StudyDeskCore:require('../core.js'),StudyDeskRadar:require('../radar.js'),structuredClone,TextEncoder,TextDecoder,btoa,atob,URL,Blob,
- document:{querySelector:node,querySelectorAll:selector=>selector==='dialog[open]'?[...nodes.values()].filter(n=>n.open):[],body:{classList:{add(){},remove(){}}},addEventListener(){},createElement:()=>({click(){}})},
+ document:{querySelector:node,querySelectorAll:selector=>selector==='dialog[open]'?[...nodes.values()].filter(n=>n.open):[],body:{classList:{add(){},remove(){}}},addEventListener(name,handler){events.set(name,handler);},createElement:()=>({click(){}})},
  localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value)},
- window:{addEventListener(){}},navigator:{},setTimeout:()=>1,clearTimeout(){},confirm:()=>true,console
+ window:{addEventListener(){}},navigator:{},setTimeout:()=>1,setInterval:()=>1,clearTimeout(){},confirm:()=>true,console
 });
 vm.runInContext(fs.readFileSync(path.join(__dirname,'../app.js'),'utf8')+'\nglobalThis.getState=()=>({data,key,envelope,unlocked,storedVersion});globalThis.save=persist;globalThis.prepare=prepareBackup;',context);
 const submit=id=>node(id).onsubmit({preventDefault(){}});
 (async()=>{
  await node('#skipProtectionBtn').onclick();assert.equal(context.getState().envelope.format,'study-desk-plain');assert(context.getState().unlocked);
  vm.runInContext("data.sites.push({id:'s',name:'示例',url:'https://example.com/',password:'fixture-secret',account:'fixture-account'});data.tasks.push({id:'t',siteId:'s',title:'测试任务',status:'doing',due:'',est:20});",context);
- await context.save();const plain=storage.get('study-desk.v1');assert(plain.includes('fixture-secret'));
+ await context.save();
+ await events.get('click')({target:{closest:()=>({dataset:{action:'toggle',id:'t'}})}});
+ assert.equal(context.getState().data.tasks[0].status,'done');
+ await events.get('click')({target:{closest:()=>({dataset:{action:'toggle',id:'t'}})}});
+ assert.equal(context.getState().data.tasks[0].status,'open');
+ vm.runInContext("data.tasks[0].status='doing';",context);await context.save();
+ const plain=storage.get('study-desk.v1');assert(plain.includes('fixture-secret'));
  node('#protectionBtn').onclick();node('#protectionMode').value='encrypted';node('#newProtectionPassword').value='test-only-vault-pass';node('#newProtectionConfirm').value='test-only-vault-pass';await submit('#protectionForm');
  const encrypted=storage.get('study-desk.v1');assert(!encrypted.includes('fixture-secret'));assert.equal(context.getState().envelope.format,'study-desk-vault');assert.equal(context.getState().data.tasks[0].status,'doing');
  node('#protectionBtn').onclick();node('#protectionMode').value='plain';node('#currentProtectionPassword').value='wrong-pass';await submit('#protectionForm');assert.equal(storage.get('study-desk.v1'),encrypted);assert(context.getState().key);
